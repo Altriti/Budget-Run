@@ -2,7 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Application.Transactions;
 using Domain;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
@@ -11,21 +13,36 @@ namespace API.Controllers
 {
     public class TransactionsController : BaseApiController
     {
-        private readonly DataContext _context;
-        public TransactionsController(DataContext context)
-        {
-            _context = context;
-        }
 
         [HttpGet]
         public async Task<ActionResult<List<Transaction>>> GetTransactions()
         {
-            return await _context.Transactions.ToListAsync();
+            return await Mediator.Send(new List.Query());
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Transaction>>GetTransaction(Guid id){
-            return await _context.Transactions.FindAsync(id);
+        public async Task<ActionResult<Transaction>> GetTransaction(Guid id)
+        {
+            return await Mediator.Send(new Details.Query { Id = id });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateTransaction(Transaction transaction)
+        {
+            return Ok(await Mediator.Send(new Create.Command { Transaction = transaction }));
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> EditTransaction(Guid id, Transaction transaction)
+        {
+            transaction.Id = id;
+            return Ok(await Mediator.Send(new Edit.Command { Transaction = transaction }));
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteTransaction(Guid id)
+        {
+            return Ok(await Mediator.Send(new Delete.Command { Id = id }));
         }
     }
 }
