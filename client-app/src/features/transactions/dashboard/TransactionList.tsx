@@ -1,13 +1,22 @@
 import { Button, Item, Label, Segment } from "semantic-ui-react";
 import { Transaction } from "../../../app/models/transaction";
+import { SyntheticEvent, useState } from "react";
 
 interface Props {
     transactions: Transaction[];
     selectTransaction: (id: string) => void;
     deleteTransaction: (id: string) => void;
+    submitting: boolean;
 }
 
-export default function TransactionList({ transactions, selectTransaction, deleteTransaction }: Props) {
+export default function TransactionList({ transactions, selectTransaction, deleteTransaction, submitting }: Props) {
+    const [target, setTarget] = useState('');
+
+    function handletransactionDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
+        setTarget(e.currentTarget.name);
+        deleteTransaction(id);
+    };
+
     return (
         <Segment>
             <Item.Group divided>
@@ -21,8 +30,20 @@ export default function TransactionList({ transactions, selectTransaction, delet
                                 <div>{transaction.amount}</div>
                             </Item.Description>
                             <Item.Extra>
-                                <Button onClick={() => selectTransaction(transaction.id)} floated='right' content='View' color='blue' />
-                                <Button onClick={() => deleteTransaction(transaction.id)} floated='right' content='Delete' color='red' />
+                                <Button
+                                    onClick={() => selectTransaction(transaction.id)}
+                                    floated='right'
+                                    content='View'
+                                    color='blue'
+                                />
+                                <Button
+                                    name={transaction.id}
+                                    loading={submitting && target === transaction.id}
+                                    onClick={(e) => handletransactionDelete(e, transaction.id)}
+                                    floated='right'
+                                    content='Delete'
+                                    color='red'
+                                />
                                 <Label basic content={transaction.category} />
                             </Item.Extra>
                         </Item.Content>

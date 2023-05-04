@@ -14,10 +14,11 @@ interface Props {
     closeForm: () => void
     createOrEdit: (transation: Transaction) => void;
     deleteTransaction: (id: string) => void;
+    submitting: boolean;
 }
 
 export default function TransactionDashboard({ transactions, selectedTransaction, selectTransaction, cancelSelectTransaction,
-    editMode, openForm, closeForm, createOrEdit, deleteTransaction }: Props) {
+    editMode, openForm, closeForm, createOrEdit, deleteTransaction, submitting }: Props) {
     return (
         <Grid>
             <Grid.Column width='10'>
@@ -25,6 +26,7 @@ export default function TransactionDashboard({ transactions, selectedTransaction
                     transactions={transactions}
                     selectTransaction={selectTransaction}
                     deleteTransaction={deleteTransaction}
+                    submitting={submitting}
                 />
             </Grid.Column>
             <Grid.Column width='6'>
@@ -35,7 +37,12 @@ export default function TransactionDashboard({ transactions, selectedTransaction
                         openForm={openForm}
                     />}
                 {editMode &&
-                    <TransactionForm closeForm={closeForm} transaction={selectedTransaction} createOrEdit={createOrEdit} />}
+                    <TransactionForm
+                        closeForm={closeForm}
+                        transaction={selectedTransaction}
+                        createOrEdit={createOrEdit}
+                        submitting={submitting}
+                    />}
             </Grid.Column>
         </Grid>
     )

@@ -6,9 +6,10 @@ interface Props {
     closeForm: () => void;
     transaction: Transaction | undefined;
     createOrEdit: (transaction: Transaction) => void;
+    submitting: boolean;
 }
 
-export default function TransactionForm({ closeForm, transaction: selectedTransaction, createOrEdit }: Props) {
+export default function TransactionForm({ closeForm, transaction: selectedTransaction, createOrEdit, submitting }: Props) {
 
     const initialState = selectedTransaction ?? {
         id: '',
@@ -32,12 +33,12 @@ export default function TransactionForm({ closeForm, transaction: selectedTransa
     return (
         <Segment clearing>
             <Form onSubmit={handleSubmit} autoComplete='off'>
-                <Form.Input placeholder='Date' value={transaction.date} name='date' onChange={handleInputChange} />
+                <Form.Input type="date" placeholder='Date' value={transaction.date} name='date' onChange={handleInputChange} />
                 <Form.Input placeholder='Amount' value={transaction.amount} name='amount' onChange={handleInputChange} />
                 <Form.Input placeholder='Category' value={transaction.category} name='category' onChange={handleInputChange} />
                 <Form.Input placeholder='Description' value={transaction.description} name='description' onChange={handleInputChange} />
                 <Button floated='right' positive type='submit' content='Submit' />
-                <Button onClick={closeForm} floated='right' type='button' content='Cancel' />
+                <Button loading={submitting} onClick={closeForm} floated='right' type='button' content='Cancel' />
             </Form>
         </Segment>
     )
