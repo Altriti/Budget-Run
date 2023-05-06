@@ -1,6 +1,5 @@
 import axios, { AxiosResponse } from "axios";
 import { Transaction } from "../models/transaction";
-import { error } from "console";
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {

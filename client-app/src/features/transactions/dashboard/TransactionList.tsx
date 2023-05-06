@@ -1,16 +1,12 @@
 import { Button, Item, Label, Segment } from "semantic-ui-react";
-import { Transaction } from "../../../app/models/transaction";
 import { SyntheticEvent, useState } from "react";
+import { useStore } from "../../../app/stores/store";
+import { observer } from "mobx-react-lite";
 
-interface Props {
-    transactions: Transaction[];
-    selectTransaction: (id: string) => void;
-    deleteTransaction: (id: string) => void;
-    submitting: boolean;
-}
-
-export default function TransactionList({ transactions, selectTransaction, deleteTransaction, submitting }: Props) {
+export default observer(function TransactionList() {
     const [target, setTarget] = useState('');
+    const { transactionStore } = useStore();
+    const { selectTransaction, deleteTransaction, transactionsByDate, loading } = transactionStore;
 
     function handletransactionDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
         setTarget(e.currentTarget.name);
@@ -20,7 +16,7 @@ export default function TransactionList({ transactions, selectTransaction, delet
     return (
         <Segment>
             <Item.Group divided>
-                {transactions.map(transaction => (
+                {transactionsByDate.map(transaction => (
                     <Item key={transaction.id}>
                         <Item.Content>
                             <Item.Header as='a'>{transaction.description}</Item.Header>
@@ -38,7 +34,7 @@ export default function TransactionList({ transactions, selectTransaction, delet
                                 />
                                 <Button
                                     name={transaction.id}
-                                    loading={submitting && target === transaction.id}
+                                    loading={loading && target === transaction.id}
                                     onClick={(e) => handletransactionDelete(e, transaction.id)}
                                     floated='right'
                                     content='Delete'
@@ -52,4 +48,4 @@ export default function TransactionList({ transactions, selectTransaction, delet
             </Item.Group>
         </Segment>
     )
-}
+});

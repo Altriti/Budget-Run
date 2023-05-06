@@ -1,13 +1,14 @@
 import { Button, Card } from "semantic-ui-react";
-import { Transaction } from "../../../app/models/transaction";
+import { useStore } from "../../../app/stores/store";
+import LoadingComponent from "../../../app/layout/LoadingComponent";
+import { observer } from "mobx-react-lite";
 
-interface Props {
-    transaction: Transaction;
-    cancelSelectTransaction: () => void;
-    openForm: (id: string) => void;
-}
+export default observer(function TransactionDetails() {
+    const { transactionStore } = useStore();
+    const { selectedTransaction: transaction, openForm, cancelSelectedTransaction } = transactionStore;
 
-export default function TransactionDetails({ transaction, cancelSelectTransaction, openForm }: Props) {
+    if (!transaction) return <LoadingComponent />;
+
     return (
         <Card fluid>
             <Card.Content>
@@ -21,9 +22,9 @@ export default function TransactionDetails({ transaction, cancelSelectTransactio
             <Card.Content extra>
                 <Button.Group widths='2'>
                     <Button onClick={() => openForm(transaction.id)} basic color="blue" content='Edit' />
-                    <Button onClick={cancelSelectTransaction} basic color="grey" content='Cancel' />
+                    <Button onClick={cancelSelectedTransaction} basic color="grey" content='Cancel' />
                 </Button.Group>
             </Card.Content>
         </Card>
     )
-}
+})
