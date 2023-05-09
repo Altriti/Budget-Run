@@ -24,8 +24,7 @@ export default class TransactionStore {
         try {
             const transactions = await agent.Transactions.list();
             transactions.forEach(transaction => {
-                transaction.date = transaction.date.split('T')[0];
-                this.transactionRegistry.set(transaction.id, transaction);
+                this.setTransaction(transaction);
             });
             this.setLoadingInitial(false);
         } catch (error) {
@@ -34,26 +33,38 @@ export default class TransactionStore {
         };
     };
 
+    loadTransaction = async (id: string) => {
+        let transaction = this.getTransaction(id);
+        if (transaction) {
+            this.selectedTransaction = transaction;
+            return transaction;
+        } else {
+            this.setLoadingInitial(true);
+            try {
+                transaction = await agent.Transactions.details(id);
+                this.setTransaction(transaction);
+                runInAction(() => this.selectedTransaction = transaction);
+                this.setLoadingInitial(false);
+                return transaction;
+            } catch (error) {
+                console.log(error);
+                this.setLoadingInitial(false);
+            };
+        };
+    };
+
+    private setTransaction = (transaction: Transaction) => {
+        transaction.date = transaction.date.split('T')[0];
+        this.transactionRegistry.set(transaction.id, transaction);
+    }
+
+    private getTransaction = (id: string) => {
+        return this.transactionRegistry.get(id);
+    }
+
     setLoadingInitial = (state: boolean) => {
         this.loadingInitial = state;
     };
-
-    selectTransaction = (id: string) => {
-        this.selectedTransaction = this.transactionRegistry.get(id);
-    };
-
-    cancelSelectedTransaction = () => {
-        this.selectedTransaction = undefined;
-    };
-
-    openForm = (id?: string) => {
-        id ? this.selectTransaction(id) : this.cancelSelectedTransaction();
-        this.editMode = true;
-    };
-
-    closeForm = () => {
-        this.editMode = false;
-    }
 
     createTransaction = async (transaction: Transaction) => {
         this.loading = true;
@@ -98,7 +109,6 @@ export default class TransactionStore {
             runInAction(() => {
                 //this.transactions = [...this.transactions.filter(x => x.id !== id)];//...this.transactions.filter(x => x.id !== id) osht njejt si me thon =this.transactions po tu ja hek transaksionin me id e dhene
                 this.transactionRegistry.delete(id);
-                if (this.selectedTransaction?.id === id) this.cancelSelectedTransaction();
                 this.loading = false;
             })
         } catch (error) {

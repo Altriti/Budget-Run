@@ -2,11 +2,12 @@ import { Button, Item, Label, Segment } from "semantic-ui-react";
 import { SyntheticEvent, useState } from "react";
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
+import { Link } from "react-router-dom";
 
 export default observer(function TransactionList() {
     const [target, setTarget] = useState('');
     const { transactionStore } = useStore();
-    const { selectTransaction, deleteTransaction, transactionsByDate, loading } = transactionStore;
+    const { deleteTransaction, transactionsByDate, loading } = transactionStore;
 
     function handletransactionDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
         setTarget(e.currentTarget.name);
@@ -27,7 +28,7 @@ export default observer(function TransactionList() {
                             </Item.Description>
                             <Item.Extra>
                                 <Button
-                                    onClick={() => selectTransaction(transaction.id)}
+                                    as={Link} to={`/transactions/${transaction.id}`}
                                     floated='right'
                                     content='View'
                                     color='blue'

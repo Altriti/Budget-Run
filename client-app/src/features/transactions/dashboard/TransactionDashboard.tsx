@@ -1,14 +1,20 @@
 import { Grid } from "semantic-ui-react";
 import TransactionList from "./TransactionList";
-import TransactionDetails from "../details/TransactionDetails";
-import TransactionForm from "../form/TransactionForm";
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
+import { useEffect } from "react";
+import LoadingComponent from "../../../app/layout/LoadingComponent";
 
 export default observer(function TransactionDashboard() {
 
     const { transactionStore } = useStore();
-    const { selectedTransaction, editMode } = transactionStore;
+    const { loadTransactions, transactionRegistry } = transactionStore;
+
+    useEffect(() => {
+        if (transactionRegistry.size <= 1) loadTransactions();
+    }, [transactionRegistry.size, loadTransactions]);
+
+    if (transactionStore.loadingInitial) return <LoadingComponent content='Loading app...' />
 
     return (
         <Grid>
@@ -16,10 +22,8 @@ export default observer(function TransactionDashboard() {
                 <TransactionList />
             </Grid.Column>
             <Grid.Column width='6'>
-                {selectedTransaction &&
-                    <TransactionDetails />}
-                {editMode &&
-                    <TransactionForm />}
+                {/* {selectedTransaction &&
+                    <TransactionDetails />} */}
             </Grid.Column>
         </Grid>
     )

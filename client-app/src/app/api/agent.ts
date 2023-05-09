@@ -29,6 +29,7 @@ const requests = {
 
 const Transactions = {
     list: () => requests.get<Transaction[]>('/transactions'),//vetem /transactions sepse ja shton baseURL edhe ska nveoj me shkru
+    details: (id: string) => requests.get<Transaction>(`/transactions/${id}`),
     create: (transaction: Transaction) => requests.post<void>('/transactions', transaction),
     update: (transaction: Transaction) => requests.put<void>(`/transactions/${transaction.id}`, transaction),
     delete: (id: string) => requests.del<void>(`/transactions/${id}`),

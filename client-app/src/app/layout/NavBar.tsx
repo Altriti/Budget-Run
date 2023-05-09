@@ -1,19 +1,17 @@
 import { Button, Container, Menu } from "semantic-ui-react";
-import { useStore } from "../stores/store";
+import { NavLink } from "react-router-dom";
 
 export default function NavBar() {
-
-    const { transactionStore } = useStore();
     return (
         <Menu inverted fixed='top'>
             <Container>
-                <Menu.Item header>
+                <Menu.Item header as={NavLink} to='/'>
                     <img src="/assets/logo.png" alt="logo" style={{ marginRight: '10px' }} />
                     Budget Run
                 </Menu.Item>
-                <Menu.Item name="Transactions" />
+                <Menu.Item as={NavLink} to='/transactions' name="Transactions" />
                 <Menu.Item>
-                    <Button onClick={() => transactionStore.openForm()} positive content='Add Transaction' />
+                    <Button as={NavLink} to='/createTransaction' positive content='Add Transaction' />
                 </Menu.Item>
             </Container>
 
