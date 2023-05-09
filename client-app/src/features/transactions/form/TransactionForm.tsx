@@ -27,7 +27,7 @@ export default observer(function TransactionForm() {
 
     function handleSubmit() {
         if (!transaction.id) {
-            transaction.id === uuid();
+            transaction.id = uuid();
             createTransaction(transaction).then(() => navigate(`/transactions/${transaction.id}`));
         } else {
             updateTransaction(transaction).then(() => navigate(`/transactions/${transaction.id}`));
