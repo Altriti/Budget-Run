@@ -4,6 +4,7 @@ import LoadingComponent from "../../../app/layout/LoadingComponent";
 import { observer } from "mobx-react-lite";
 import { Link, useParams } from "react-router-dom";
 import { useEffect } from "react";
+import { format } from "date-fns";
 
 export default observer(function TransactionDetails() {
     const { transactionStore } = useStore();
@@ -21,7 +22,7 @@ export default observer(function TransactionDetails() {
             <Card.Content>
                 <Card.Header>{transaction.description}</Card.Header>
                 <Card.Meta>
-                    <div>{transaction.date}</div>
+                    <div>{format(transaction.date!, 'dd MMM yyyy')}</div>
                     <div>{transaction.amount}</div>
                 </Card.Meta>
                 <Card.Description>{transaction.category}</Card.Description>

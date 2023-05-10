@@ -16,7 +16,7 @@ export default class TransactionStore {
 
     get transactionsByDate() {
         return Array.from(this.transactionRegistry.values()).sort((a, b) =>
-            Date.parse(b.date) - Date.parse(a.date));
+            b.date!.getTime() - a.date!.getTime());
     };
 
     loadTransactions = async () => {
@@ -54,7 +54,7 @@ export default class TransactionStore {
     };
 
     private setTransaction = (transaction: Transaction) => {
-        transaction.date = transaction.date.split('T')[0];
+        transaction.date = new Date(transaction.date!);
         this.transactionRegistry.set(transaction.id, transaction);
     }
 

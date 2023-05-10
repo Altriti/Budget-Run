@@ -3,6 +3,7 @@ import { SyntheticEvent, useState } from "react";
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import { Link } from "react-router-dom";
+import { format } from "date-fns";
 
 export default observer(function TransactionList() {
     const [target, setTarget] = useState('');
@@ -21,7 +22,7 @@ export default observer(function TransactionList() {
                     <Item key={transaction.id}>
                         <Item.Content>
                             <Item.Header as='a'>{transaction.description}</Item.Header>
-                            <Item.Meta>{transaction.date}</Item.Meta>
+                            <Item.Meta>{format(transaction.date!, 'dd MMM yyyy h:mm aa')}</Item.Meta>
                             <Item.Description>
                                 <div>{transaction.category}</div>
                                 <div>{transaction.amount}</div>
