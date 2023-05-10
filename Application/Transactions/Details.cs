@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Application.Core;
 using Domain;
 using MediatR;
 using Persistence;
@@ -10,12 +7,12 @@ namespace Application.Transactions
 {
     public class Details
     {
-        public class Query : IRequest<Transaction>
+        public class Query : IRequest<Result<Transaction>>
         {
             public Guid Id { get; set; }
         }
 
-        public class Handler : IRequestHandler<Query, Transaction>
+        public class Handler : IRequestHandler<Query, Result<Transaction>>
         {
             private readonly DataContext _context;
             public Handler(DataContext context)
@@ -23,9 +20,11 @@ namespace Application.Transactions
                 _context = context;
             }
 
-            public async Task<Transaction> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<Transaction>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return await _context.Transactions.FindAsync(request.Id);
+                var transaction = await _context.Transactions.FindAsync(request.Id);
+
+                return Result<Transaction>.Success(transaction);
             }
         }
     }

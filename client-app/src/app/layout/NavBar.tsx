@@ -10,6 +10,7 @@ export default function NavBar() {
                     Budget Run
                 </Menu.Item>
                 <Menu.Item as={NavLink} to='/transactions' name="Transactions" />
+                <Menu.Item as={NavLink} to='/errors' name="Errors" />
                 <Menu.Item>
                     <Button as={NavLink} to='/createTransaction' positive content='Add Transaction' />
                 </Menu.Item>

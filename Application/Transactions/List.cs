@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Application.Core;
 using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -11,9 +8,9 @@ namespace Application.Transactions
 {
     public class List
     {
-        public class Query : IRequest<List<Transaction>> { }
+        public class Query : IRequest<Result<List<Transaction>>> { }
 
-        public class Handler : IRequestHandler<Query, List<Transaction>>
+        public class Handler : IRequestHandler<Query, Result<List<Transaction>>>
         {
             private readonly DataContext _context;
             public Handler(DataContext context)
@@ -21,9 +18,9 @@ namespace Application.Transactions
                 _context = context;
             }
 
-            public async Task<List<Transaction>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<Transaction>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return await _context.Transactions.ToListAsync();
+                return Result<List<Transaction>>.Success(await _context.Transactions.ToListAsync());
             }
         }
     }
