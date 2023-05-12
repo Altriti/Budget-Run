@@ -14,7 +14,7 @@ export default observer(function TransactionDashboard() {
         if (transactionRegistry.size <= 1) loadTransactions();
     }, [transactionRegistry.size, loadTransactions]);
 
-    if (transactionStore.loadingInitial) return <LoadingComponent content='Loading app...' />
+    if (transactionStore.loadingInitial) return <LoadingComponent content='Loading transactions...' />
 
     return (
         <Grid>
