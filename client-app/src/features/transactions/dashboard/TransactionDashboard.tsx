@@ -22,6 +22,7 @@ export default observer(function TransactionDashboard() {
                 <TransactionList />
             </Grid.Column>
             <Grid.Column width='6'>
+                <h3>Details</h3>
                 {/* {selectedTransaction &&
                     <TransactionDetails />} */}
             </Grid.Column>

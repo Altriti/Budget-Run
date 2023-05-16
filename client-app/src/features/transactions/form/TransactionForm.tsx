@@ -1,8 +1,8 @@
-import { Button, Form, Header, Segment } from "semantic-ui-react";
+import { Button, Form, Header, Icon, Segment } from "semantic-ui-react";
 import { useEffect, useState } from "react";
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { Link, NavLink, useNavigate, useParams } from "react-router-dom";
 import { Transaction } from "../../../app/models/transaction";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
 import { v4 as uuid } from 'uuid';
@@ -48,8 +48,8 @@ export default observer(function TransactionForm() {
     if (loadingInitial) return <LoadingComponent content="Loading transaction..." />
 
     return (
-        <Segment clearing>
-            <Header content='Transaction Details' sub color='teal' />
+        <Segment clearing >
+            <Header content='Transaction Details' sub color='red' />
             <Formik
                 enableReinitialize
                 validationSchema={validationSchema}
@@ -66,7 +66,8 @@ export default observer(function TransactionForm() {
                             disabled={isSubmitting || !dirty || !isValid}
                             loading={loading}
                             floated='right'
-                            positive type='submit'
+                            color="red"
+                            type='submit'
                             content='Submit' />
                         <Button
                             as={Link} to={'/transactions'}
@@ -76,6 +77,18 @@ export default observer(function TransactionForm() {
                     </Form>
                 )}
             </Formik>
+            <Button
+                animated
+                style={{ position: 'fixed', bottom: '1em', right: '1em' }}
+                as={NavLink}
+                to='/transactions'
+                color='red'
+                size='big'
+                circular
+            >
+                <Button.Content visible><Icon name='arrow left' /></Button.Content>
+                <Button.Content hidden>BACK</Button.Content>
+            </Button>
         </Segment>
     )
 })

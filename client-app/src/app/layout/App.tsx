@@ -1,4 +1,4 @@
-import { Container } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 import NavBar from './NavBar';
 import { observer } from 'mobx-react-lite';
 import { Outlet } from 'react-router-dom';
@@ -7,6 +7,7 @@ import { useStore } from '../stores/store';
 import { useEffect } from 'react';
 import LoadingComponent from './LoadingComponent';
 import ModalContainer from '../common/modals/ModalContainer';
+import AppDashboard from './AppDashboard';
 
 
 function App() {
@@ -26,9 +27,16 @@ function App() {
       <ModalContainer />
       <ToastContainer position='bottom-right' theme='colored' />
       <NavBar />
-      <Container style={{ marginTop: '7em' }}>
-        <Outlet />
-      </Container>
+      <Grid style={{ marginTop: '2em' }}>
+        <Grid.Row>
+          <Grid.Column width='3'>
+            <AppDashboard />
+          </Grid.Column>
+          <Grid.Column width='12'>
+            <Outlet />
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
     </>
   );
 }

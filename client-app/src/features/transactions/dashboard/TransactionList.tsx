@@ -1,8 +1,8 @@
-import { Button, Item, Label, Segment } from "semantic-ui-react";
+import { Button, Grid, Header, Icon, Item, Label, Segment } from "semantic-ui-react";
 import { SyntheticEvent, useState } from "react";
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { format } from "date-fns";
 
 export default observer(function TransactionList() {
@@ -17,22 +17,30 @@ export default observer(function TransactionList() {
 
     return (
         <Segment>
+            <Header style={{ fontWeight: "bold", fontSize: '13px', textDecoration: 'underline', color: 'red' }}>TRANSACTIONS</Header>
             <Item.Group divided>
                 {transactionsByDate.map(transaction => (
                     <Item key={transaction.id}>
                         <Item.Content>
-                            <Item.Header as='a'>{transaction.description}</Item.Header>
-                            <Item.Meta>{format(transaction.date!, 'dd MMM yyyy h:mm aa')}</Item.Meta>
-                            <Item.Description>
-                                <div>{transaction.category}</div>
-                                <div>{transaction.amount}</div>
-                            </Item.Description>
-                            <Item.Extra>
+                            <Item.Header as='a' style={{ width: '100%', }}>
+                                <Grid>
+                                    <Grid.Column width='13'>
+                                        {transaction.description}
+                                    </Grid.Column>
+                                    <Grid.Column width='3' textAlign='right'>
+                                        <Label tag color="red">{transaction.amount} &euro;</Label>
+                                    </Grid.Column>
+                                </Grid>
+                            </Item.Header>
+                            <Item.Meta>{format(transaction.date!, 'dd MMM yyyy')}</Item.Meta>
+                            <Segment basic>
                                 <Button
                                     as={Link} to={`/transactions/${transaction.id}`}
                                     floated='right'
                                     content='View'
                                     color='blue'
+                                    basic
+                                    size="small"
                                 />
                                 <Button
                                     name={transaction.id}
@@ -41,13 +49,25 @@ export default observer(function TransactionList() {
                                     floated='right'
                                     content='Delete'
                                     color='red'
+                                    basic
+                                    size="small"
                                 />
                                 <Label basic content={transaction.category} />
-                            </Item.Extra>
+                            </Segment>
                         </Item.Content>
                     </Item>
                 ))}
             </Item.Group>
-        </Segment>
+            <Button animated style={{ position: 'fixed', bottom: '1em', right: '1em' }}
+                as={NavLink}
+                to='/createTransaction'
+                color='red'
+                size='big'
+                circular
+            >
+                <Button.Content visible><Icon name='plus' /></Button.Content>
+                <Button.Content hidden>ADD</Button.Content>
+            </Button>
+        </Segment >
     )
 });

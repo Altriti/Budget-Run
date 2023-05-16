@@ -1,4 +1,4 @@
-import { Button, Container, Dropdown, Menu } from "semantic-ui-react";
+import { Container, Dropdown, Icon, Menu } from "semantic-ui-react";
 import { Link, NavLink } from "react-router-dom";
 import { useStore } from "../stores/store";
 import { observer } from "mobx-react-lite";
@@ -9,14 +9,10 @@ export default observer(function NavBar() {
         <Menu inverted fixed='top'>
             <Container>
                 <Menu.Item header as={NavLink} to='/'>
-                    <img src="/assets/logo.png" alt="logo" style={{ marginRight: '10px' }} />
+                    <Icon size="big" name="money" style={{ marginRight: '10px' }} />
                     Budget Run
                 </Menu.Item>
-                <Menu.Item as={NavLink} to='/transactions' name="Transactions" />
                 <Menu.Item as={NavLink} to='/errors' name="Errors" />
-                <Menu.Item>
-                    <Button as={NavLink} to='/createTransaction' positive content='Add Transaction' />
-                </Menu.Item>
                 <Menu.Item position="right">
                     <Dropdown pointing='top left' text={user?.displayName}>
                         <Dropdown.Menu>
