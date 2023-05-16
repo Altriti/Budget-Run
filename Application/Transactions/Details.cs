@@ -1,6 +1,7 @@
 using Application.Core;
 using Domain;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Persistence;
 
 namespace Application.Transactions
@@ -22,7 +23,9 @@ namespace Application.Transactions
 
             public async Task<Result<Transaction>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var transaction = await _context.Transactions.FindAsync(request.Id);
+                var transaction = await _context.Transactions
+                    .Include(x => x.AppUser)
+                    .FirstOrDefaultAsync(x => x.Id == request.Id);
 
                 return Result<Transaction>.Success(transaction);
             }

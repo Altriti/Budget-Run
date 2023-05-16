@@ -1,8 +1,10 @@
 using Application.Core;
+using Application.Interfaces;
 using AutoMapper;
 using Domain;
 using FluentValidation;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using Persistence;
 
 namespace Application.Transactions
@@ -26,8 +28,10 @@ namespace Application.Transactions
         {
             private readonly DataContext _context;
             private readonly IMapper _mapper;
-            public Handler(DataContext context, IMapper mapper)
+            private readonly IUserAccessor _userAccessor;
+            public Handler(DataContext context, IMapper mapper, IUserAccessor userAccessor)
             {
+                _userAccessor = userAccessor;
                 _mapper = mapper;
                 _context = context;
             }
@@ -36,7 +40,13 @@ namespace Application.Transactions
             {
                 var transaction = await _context.Transactions.FindAsync(request.Transaction.Id);
 
+                transaction.AppUserId = null;
+
                 if (transaction == null) return null;
+
+                var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == _userAccessor.GetUserId());
+
+                request.Transaction.AppUserId = user.Id;
 
                 _mapper.Map(request.Transaction, transaction);
 

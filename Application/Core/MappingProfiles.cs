@@ -11,7 +11,7 @@ namespace Application.Core
     {
         public MappingProfiles()
         {
-            CreateMap<Transaction, Transaction>();
+            CreateMap<Transaction, Transaction>().ForMember(x => x.AppUser, y => y.Ignore());
         }
     }
 }
