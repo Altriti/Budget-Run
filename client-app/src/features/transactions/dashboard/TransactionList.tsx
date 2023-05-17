@@ -16,7 +16,7 @@ export default observer(function TransactionList() {
         deleteTransaction(id);
     };
 
-    if (transactionStore.transactionRegistry.size == 0) return <EmptyComponent typeOfList="Transactions"/>
+    if (transactionStore.transactionRegistry.size === 0) return <EmptyComponent typeOfList="Transactions"/>
 
     return (
         <Segment>

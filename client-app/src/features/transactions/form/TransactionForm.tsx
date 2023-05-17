@@ -22,7 +22,8 @@ export default observer(function TransactionForm() {
         date: null,
         amount: 0,
         category: '',
-        description: ''
+        description: '',
+        appUserId: '',
     });
 
     const validationSchema = Yup.object({
