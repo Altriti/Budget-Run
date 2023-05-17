@@ -1,4 +1,5 @@
 using Application.Core;
+using Application.Interfaces;
 using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -16,8 +17,10 @@ namespace Application.Transactions
         public class Handler : IRequestHandler<Query, Result<Transaction>>
         {
             private readonly DataContext _context;
-            public Handler(DataContext context)
+            private readonly IUserAccessor _userAccessor;
+            public Handler(DataContext context, IUserAccessor userAccessor)
             {
+                _userAccessor = userAccessor;
                 _context = context;
             }
 
@@ -25,6 +28,7 @@ namespace Application.Transactions
             {
                 var transaction = await _context.Transactions
                     .Include(x => x.AppUser)
+                    .Where(x => x.AppUserId == _userAccessor.GetUserId())
                     .FirstOrDefaultAsync(x => x.Id == request.Id);
 
                 return Result<Transaction>.Success(transaction);

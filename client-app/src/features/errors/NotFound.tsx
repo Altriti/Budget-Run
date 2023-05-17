@@ -8,13 +8,14 @@ export default function NoutFound() {
                 <Icon name="search">
                     Couldn't find what you are looking for!
                 </Icon>
-                <Segment.Inline>
+                <Segment basic>
                     <Button
                         as={Link} to='/transactions'
+                        color="red"
                     >
                         Return to Transactions Page
                     </Button>
-                </Segment.Inline>
+                </Segment>
             </Header>
         </Segment>
     )

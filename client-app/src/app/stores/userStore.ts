@@ -43,6 +43,7 @@ export default class UserStore {
         store.commonStore.setToken(null);
         this.user = null;
         router.navigate('/');
+        store.transactionStore.transactionRegistry.clear();
     };
 
     getUser = async () => {

@@ -4,6 +4,7 @@ import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import { Link, NavLink } from "react-router-dom";
 import { format } from "date-fns";
+import EmptyComponent from "../../../app/layout/EmptyComponent";
 
 export default observer(function TransactionList() {
     const [target, setTarget] = useState('');
@@ -14,6 +15,8 @@ export default observer(function TransactionList() {
         setTarget(e.currentTarget.name);
         deleteTransaction(id);
     };
+
+    if (transactionStore.transactionRegistry.size == 0) return <EmptyComponent typeOfList="Transactions"/>
 
     return (
         <Segment>

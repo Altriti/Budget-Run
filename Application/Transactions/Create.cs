@@ -37,7 +37,7 @@ namespace Application.Transactions
             {
                 var user = await _context.Users.FirstOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername());
 
-                request.Transaction.AppUser = user;
+                request.Transaction.AppUserId = user.Id;
 
                 _context.Transactions.Add(request.Transaction);
 
