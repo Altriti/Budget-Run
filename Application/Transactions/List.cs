@@ -26,6 +26,7 @@ namespace Application.Transactions
                 return Result<List<Transaction>>
                 .Success(await _context.Transactions
                 .Include(x => x.AppUser)
+                .ThenInclude(y => y.Members)
                 .Where(x => x.AppUserId == _userAccessor.GetUserId())
                 .ToListAsync());
             }

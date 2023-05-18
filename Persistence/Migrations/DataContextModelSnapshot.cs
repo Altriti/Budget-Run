@@ -87,6 +87,28 @@ namespace Persistence.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Member", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Surname")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AppUserId");
+
+                    b.ToTable("Members");
+                });
+
             modelBuilder.Entity("Domain.Transaction", b =>
                 {
                     b.Property<Guid>("Id")
@@ -243,6 +265,13 @@ namespace Persistence.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("Domain.Member", b =>
+                {
+                    b.HasOne("Domain.AppUser", null)
+                        .WithMany("Members")
+                        .HasForeignKey("AppUserId");
+                });
+
             modelBuilder.Entity("Domain.Transaction", b =>
                 {
                     b.HasOne("Domain.AppUser", "AppUser")
@@ -301,6 +330,11 @@ namespace Persistence.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Domain.AppUser", b =>
+                {
+                    b.Navigation("Members");
                 });
 #pragma warning restore 612, 618
         }

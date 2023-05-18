@@ -14,5 +14,6 @@ namespace Persistence
         {
         }
         public DbSet<Transaction> Transactions { get; set; }
+        public DbSet<Member> Members { get; set; }
     }
 }

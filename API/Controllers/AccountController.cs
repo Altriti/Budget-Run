@@ -81,6 +81,15 @@ namespace API.Controllers
             return CreateUserDto(user);
         }
 
+        [AllowAnonymous]
+        [HttpGet("users")]
+        public async Task<ActionResult<List<AppUser>>> GetUsers()
+        {
+            var users = await _userManager.Users.Include(x => x.Members).ToListAsync();
+
+            return users;
+        }
+
         private UserDto CreateUserDto(AppUser user)
         {
             return new UserDto

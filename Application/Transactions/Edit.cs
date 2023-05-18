@@ -44,7 +44,7 @@ namespace Application.Transactions
 
                 if (transaction == null) return null;
 
-                var user = await _context.Users.FirstOrDefaultAsync(x => x.Id == _userAccessor.GetUserId());
+                var user = await _context.Users.Include(x => x.Members).FirstOrDefaultAsync(x => x.Id == _userAccessor.GetUserId());
 
                 request.Transaction.AppUserId = user.Id;
 

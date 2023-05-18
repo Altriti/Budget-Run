@@ -1,49 +1,48 @@
 using Application.Core;
-using Application.Interfaces;
+using AutoMapper;
 using Domain;
 using FluentValidation;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 using Persistence;
 
-namespace Application.Transactions
+namespace Application.Members
 {
-    public class Create
+    public class Update
     {
         public class Command : IRequest<Result<Unit>>
         {
-            public Transaction Transaction { get; set; }
+            public Member Member { get; set; }
         }
 
         public class CommandValidator : AbstractValidator<Command>
         {
             public CommandValidator()
             {
-                RuleFor(x => x.Transaction).SetValidator(new TransactionValidator());
+                RuleFor(x => x.Member).SetValidator(new MemberValidator());
             }
         }
 
         public class Handler : IRequestHandler<Command, Result<Unit>>
         {
             private readonly DataContext _context;
-            private readonly IUserAccessor _userAccessor;
-            public Handler(DataContext context, IUserAccessor userAccessor)
+            private readonly IMapper _mapper;
+            public Handler(DataContext context, IMapper mapper)
             {
-                _userAccessor = userAccessor;
+                _mapper = mapper;
                 _context = context;
             }
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var user = await _context.Users.Include(x => x.Members).FirstOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername());
+                var member = await _context.Members.FindAsync(request.Member.Id);
 
-                request.Transaction.AppUserId = user.Id;
+                if (member == null) return null;
 
-                _context.Transactions.Add(request.Transaction);
+                _mapper.Map(request.Member, member);
 
                 var result = await _context.SaveChangesAsync() > 0;
 
-                if (!result) return Result<Unit>.Failure("Couldn't update transaction");
+                if (!result) return Result<Unit>.Failure("Couldn't update member");
 
                 return Result<Unit>.Success(Unit.Value);
             }
