@@ -44,6 +44,7 @@ export default class UserStore {
         this.user = null;
         router.navigate('/');
         store.transactionStore.transactionRegistry.clear();
+        store.memberStore.memberRegistry.clear();
     };
 
     getUser = async () => {

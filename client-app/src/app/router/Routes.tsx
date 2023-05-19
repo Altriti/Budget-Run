@@ -8,6 +8,9 @@ import TestErrors from "../../features/errors/TestError";
 import NotFound from "../../features/errors/NotFound";
 import ServerError from "../../features/errors/ServerError";
 import LoginForm from "../../features/users/LoginForm";
+import MemberDashboard from "../../features/members/dashboard/MemberDashboard";
+import MemberDetails from "../../features/members/details/MemberDetails";
+import MemberForm from "../../features/members/form/MemberForm";
 
 export const routes: RouteObject[] = [
     {
@@ -23,6 +26,10 @@ export const routes: RouteObject[] = [
             { path: 'errors', element: <TestErrors /> },
             { path: 'not-found', element: <NotFound /> },
             { path: 'server-error', element: <ServerError /> },
+            { path: 'members', element: <MemberDashboard /> },
+            { path: 'members/:id', element: <MemberDetails /> },
+            { path: 'createMember', element: <MemberForm key={'create'} /> },
+            { path: 'members/manage/:id', element: <MemberForm key={'create'} /> },
             { path: '*', element: <Navigate replace to='/not-found' /> },
         ]
     }

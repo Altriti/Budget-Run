@@ -4,6 +4,7 @@ import { Grid, Header, Segment } from "semantic-ui-react";
 export default function AppDashboard() {
     const location = useLocation();
     const isTransactionsActive = location.pathname === '/transactions';
+    const isMembersActive = location.pathname === '/members';
     return (
         <>
             <Segment inverted color='red'>
@@ -22,9 +23,14 @@ export default function AppDashboard() {
                         </Grid.Column>
                     </Grid.Row>
                     <Grid.Row textAlign="center">
-                        <Grid.Column >
-                            <Segment inverted color='red' style={{ fontSize: '20px' }}>
-                                Statistics
+                        <Grid.Column style={{ textDecoration: isMembersActive ? 'underline' : 'none' }}>
+                            <Segment
+                                as={NavLink}
+                                to='/members'
+                                inverted
+                                color='red'
+                                style={{ fontSize: '20px' }}>
+                                MEMBERS
                             </Segment>
                         </Grid.Column>
                     </Grid.Row>
