@@ -10,9 +10,10 @@ export default function AppDashboard() {
             <Segment inverted color='red'>
                 <Header style={{ fontWeight: "bold", fontSize: '13px', textDecoration: 'underline' }}>DASHBOARD</Header>
                 <Grid style={{ paddingTop: '3em' }}>
-                    <Grid.Row textAlign="center">
+                    <Grid.Row style={{padding: '2em'}} textAlign="center">
                         <Grid.Column style={{ textDecoration: isTransactionsActive ? 'underline' : 'none' }}>
                             <Segment
+                                className="dashboard-segment-hover"
                                 as={NavLink}
                                 to='/transactions'
                                 inverted
@@ -22,9 +23,10 @@ export default function AppDashboard() {
                             </Segment>
                         </Grid.Column>
                     </Grid.Row>
-                    <Grid.Row textAlign="center">
+                    <Grid.Row style={{padding: '2em'}} textAlign="center">
                         <Grid.Column style={{ textDecoration: isMembersActive ? 'underline' : 'none' }}>
                             <Segment
+                                className="dashboard-segment-hover"
                                 as={NavLink}
                                 to='/members'
                                 inverted
@@ -34,24 +36,42 @@ export default function AppDashboard() {
                             </Segment>
                         </Grid.Column>
                     </Grid.Row>
-                    <Grid.Row textAlign="center">
-                        <Grid.Column >
-                            <Segment inverted color='red' style={{ fontSize: '20px' }}>
-                                Statistics
+                    <Grid.Row style={{padding: '2em'}} textAlign="center">
+                        <Grid.Column style={{ textDecoration: isMembersActive ? 'underline' : 'none' }}>
+                            <Segment
+                                className="dashboard-segment-hover"
+                                as={NavLink}
+                                to='/members'
+                                inverted
+                                color='red'
+                                style={{ fontSize: '20px' }}>
+                                MEMBERS
                             </Segment>
                         </Grid.Column>
                     </Grid.Row>
-                    <Grid.Row textAlign="center">
-                        <Grid.Column >
-                            <Segment inverted color='red' style={{ fontSize: '20px' }}>
-                                Statistics
+                    <Grid.Row style={{padding: '2em'}} textAlign="center">
+                        <Grid.Column style={{ textDecoration: isMembersActive ? 'underline' : 'none' }}>
+                            <Segment
+                                className="dashboard-segment-hover"
+                                as={NavLink}
+                                to='/members'
+                                inverted
+                                color='red'
+                                style={{ fontSize: '20px' }}>
+                                MEMBERS
                             </Segment>
                         </Grid.Column>
                     </Grid.Row>
-                    <Grid.Row textAlign="center">
-                        <Grid.Column >
-                            <Segment inverted color='red' style={{ fontSize: '20px' }}>
-                                Statistics
+                    <Grid.Row style={{padding: '2em'}} textAlign="center">
+                        <Grid.Column style={{ textDecoration: isMembersActive ? 'underline' : 'none' }}>
+                            <Segment
+                                className="dashboard-segment-hover"
+                                as={NavLink}
+                                to='/members'
+                                inverted
+                                color='red'
+                                style={{ fontSize: '20px' }}>
+                                MEMBERS
                             </Segment>
                         </Grid.Column>
                     </Grid.Row>
