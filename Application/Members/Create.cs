@@ -40,7 +40,9 @@ namespace Application.Members
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
                 var user = await _context.Users.Include(x => x.Members).FirstOrDefaultAsync(x => x.Id == _userAccessor.GetUserId());
-                
+
+                if (user == null) return Result<Unit>.Failure("You should be logged in to add a member. If you are logged in try again");
+
                 _context.Members.Add(request.Member);
 
                 user.Members.Add(request.Member);
