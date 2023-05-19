@@ -1,4 +1,5 @@
 using Application.Core;
+using Application.Interfaces;
 using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -13,14 +14,35 @@ namespace Application.Members
         public class Handler : IRequestHandler<Query, Result<List<Member>>>
         {
             private readonly DataContext _context;
-            public Handler(DataContext context)
+            private readonly IUserAccessor _userAccessor;
+            public Handler(DataContext context, IUserAccessor userAccessor)
             {
+                _userAccessor = userAccessor;
                 _context = context;
             }
 
             public async Task<Result<List<Member>>> Handle(Query request, CancellationToken cancellationToken)
             {
-                return Result<List<Member>>.Success(await _context.Members.ToListAsync());
+                //The logic used here is big brain. 100% from my brain, so proud.
+                var user = await _context.Users.Include(x => x.Members).FirstOrDefaultAsync(x => x.Id == _userAccessor.GetUserId());
+
+                var userMembersList = user.Members.ToList();
+
+                var membersList = await _context.Members.ToListAsync();
+
+                var membersToReturn = new List<Member>();
+
+                foreach (var member in membersList)
+                {
+                    foreach (var userMember in userMembersList)
+                    {
+                        if (userMember.Id == member.Id)
+                        {
+                            membersToReturn.Add(member);
+                        };
+                    };
+                };
+                return Result<List<Member>>.Success(membersToReturn);
             }
         }
     }
