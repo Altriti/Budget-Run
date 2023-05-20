@@ -105,6 +105,19 @@ export default class MemberStore {
         } catch (error) {
             this.loading = false;
             console.log(error);
-        }
-    }
+        };
+    };
+
+    manageAccess = async (id: string) => {
+        this.loading = true;
+        try {
+            await agent.Members.access(id);
+            runInAction(() => {
+                this.loading = false;
+            });
+        } catch (error) {
+            this.loading = false;
+            console.log(error);
+        };
+    };
 };

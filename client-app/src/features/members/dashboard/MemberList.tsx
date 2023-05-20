@@ -7,7 +7,7 @@ import EmptyComponent from "../../../app/layout/EmptyComponent";
 
 export default observer(function MemberList() {
     const { memberStore } = useStore();
-    const { membersArr, deleteMember, loading } = memberStore;
+    const { membersArr, deleteMember, loading, manageAccess } = memberStore;
 
     const [target, setTarget] = useState('');
 
@@ -53,6 +53,13 @@ export default observer(function MemberList() {
                                     size="small"
                                 />
                                 <Label basic content='label' />
+                                <Button
+                                    name={member.id}
+                                    content={member.access ? 'Granted' : 'Denied'}
+                                    color={member.access ? 'green' : 'red'}
+                                    onClick={() => manageAccess(member.id)}
+                                    size="mini"
+                                />
                             </Segment>
                         </Item.Content>
                     </Item>

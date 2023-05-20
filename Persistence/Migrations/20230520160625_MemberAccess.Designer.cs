@@ -11,8 +11,8 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230518121602_UserMemebrsAdded")]
-    partial class UserMemebrsAdded
+    [Migration("20230520160625_MemberAccess")]
+    partial class MemberAccess
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -94,6 +94,9 @@ namespace Persistence.Migrations
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
+
+                    b.Property<bool>("Access")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("AppUserId")
                         .HasColumnType("TEXT");

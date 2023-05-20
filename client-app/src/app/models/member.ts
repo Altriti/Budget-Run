@@ -1,5 +1,6 @@
 export interface Member {
     id: string,
     name: string,
-    surname: string
+    surname: string,
+    access?: boolean
 }

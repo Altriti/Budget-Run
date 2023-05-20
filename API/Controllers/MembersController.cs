@@ -36,5 +36,11 @@ namespace API.Controllers
         {
             return HandleResult(await Mediator.Send(new Delete.Command { Id = id }));
         }
+
+        [HttpPost("access/{id}")]
+        public async Task<IActionResult> ManageMember(Guid id)
+        {
+            return HandleResult(await Mediator.Send(new MemberAccess.Command { Id = id }));
+        }
     }
 }

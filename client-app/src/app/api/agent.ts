@@ -87,7 +87,8 @@ const Members = {
     details: (id: string) => requests.get<Member>(`/members/${id}`),
     create: (member: Member) => requests.post<void>('/members', member),
     update: (member: Member) => requests.put<void>(`/members/${member.id}`, member),
-    delete: (id: string) => requests.del<void>(`/members/${id}`)
+    delete: (id: string) => requests.del<void>(`/members/${id}`),
+    access: (id: string) => axios.post<void>(`/members/access/${id}`)
 }
 
 const agent = {

@@ -93,6 +93,9 @@ namespace Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("Access")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("AppUserId")
                         .HasColumnType("TEXT");
 
