@@ -56,6 +56,7 @@ export default observer(function TransactionList() {
                                     size="small"
                                 />
                                 <Label basic content={transaction.category} />
+                                <Label basic content={transaction.transactionType} />
                             </Segment>
                         </Item.Content>
                     </Item>

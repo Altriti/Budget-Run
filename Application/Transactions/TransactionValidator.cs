@@ -7,6 +7,7 @@ namespace Application.Transactions
     {
         public TransactionValidator()
         {
+            RuleFor(x => x.TransactionType).NotEmpty();
             RuleFor(x => x.Date).NotEmpty();
             RuleFor(x => x.Amount).NotEmpty();
             RuleFor(x => x.Category).NotEmpty();

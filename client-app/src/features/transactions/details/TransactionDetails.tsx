@@ -27,6 +27,7 @@ export default observer(function TransactionDetails() {
                         <div>{transaction.amount}</div>
                     </Card.Meta>
                     <Card.Description>{transaction.category}</Card.Description>
+                    <Card.Description>{transaction.transactionType}</Card.Description>
                 </Card.Content>
                 <Card.Content extra>
                     <Button.Group widths='2'>

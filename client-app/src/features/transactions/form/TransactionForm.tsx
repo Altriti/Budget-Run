@@ -19,6 +19,7 @@ export default observer(function TransactionForm() {
 
     const [transaction, setTransaction] = useState<Transaction>({
         id: '',
+        transactionType: '',
         date: null,
         amount: 0,
         category: '',
@@ -27,10 +28,11 @@ export default observer(function TransactionForm() {
     });
 
     const validationSchema = Yup.object({
-        date: Yup.string().required('Date is required').nullable(),
-        amount: Yup.number().required('Amount is required'),
-        category: Yup.string().required('Category is required'),
-        description: Yup.string().required('Description is required'),
+        transactionType: Yup.string().required('Transaction type cannot be empty'),
+        date: Yup.string().required('Date cannot be empty').nullable(),
+        amount: Yup.number().required('Amount cannot be empty'),
+        category: Yup.string().required('Category cannot be empty'),
+        description: Yup.string().required('Description cannot be empty'),
     });
 
     useEffect(() => {
@@ -59,6 +61,7 @@ export default observer(function TransactionForm() {
             >
                 {({ handleSubmit, isValid, isSubmitting, dirty }) => (
                     <Form className='ui form' onSubmit={handleSubmit} autoComplete='off'>
+                        <MyTextInput placeholder='TransactionType' name='transactionType' />
                         <MyDateInput name='date' placeholderText='Date' showTimeSelect timeCaption='time' dateFormat='MMMM d, yyyy h:mm aa' />
                         <MyTextInput placeholder='Amount' name='amount' />
                         <MyTextInput placeholder='Category' name='category' />
