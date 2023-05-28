@@ -26,11 +26,7 @@ namespace Application.Transactions
 
             public async Task<Result<Transaction>> Handle(Query request, CancellationToken cancellationToken)
             {
-                var transaction = await _context.Transactions
-                    .Include(x => x.AppUser)
-                    .ThenInclude(y => y.Members)
-                    .Where(x => x.AppUserId == _userAccessor.GetUserId())
-                    .FirstOrDefaultAsync(x => x.Id == request.Id);
+                var transaction = await _context.Transactions.Include(x => x.Users).FirstOrDefaultAsync(x => x.Id == request.Id);
 
                 return Result<Transaction>.Success(transaction);
             }

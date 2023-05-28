@@ -25,7 +25,7 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> EditMember(Guid id, Member member)
+        public async Task<IActionResult> EditMember(string id, Member member)
         {
             member.Id = id;
             return HandleResult(await Mediator.Send(new Update.Command { Member = member }));

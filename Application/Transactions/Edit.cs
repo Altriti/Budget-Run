@@ -40,13 +40,7 @@ namespace Application.Transactions
             {
                 var transaction = await _context.Transactions.FindAsync(request.Transaction.Id);
 
-                transaction.AppUserId = null;
-
                 if (transaction == null) return null;
-
-                var user = await _context.Users.Include(x => x.Members).FirstOrDefaultAsync(x => x.Id == _userAccessor.GetUserId());
-
-                request.Transaction.AppUserId = user.Id;
 
                 _mapper.Map(request.Transaction, transaction);
 

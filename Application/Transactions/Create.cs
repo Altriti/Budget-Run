@@ -35,15 +35,48 @@ namespace Application.Transactions
 
             public async Task<Result<Unit>> Handle(Command request, CancellationToken cancellationToken)
             {
-                var user = await _context.Users.Include(x => x.Members).FirstOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername());
+                var user = await _context.Users
+                    .Include(x => x.Members)
+                    .FirstOrDefaultAsync(x => x.UserName == _userAccessor.GetUsername());
 
-                request.Transaction.AppUserId = user.Id;
+                if (user == null)
+                {
+                    return Result<Unit>.Failure("You should be logged in to add a transaction");
+                }
+
+                var transactionUser = new TransactionUser
+                {
+                    AppUser = user,
+                    Transaction = request.Transaction
+                };
+
+                var member = await _context.Members
+                    .FirstOrDefaultAsync(x => x.Email == user.Email);
+
+                if (member != null)
+                {
+                    var parentUser = await _context.Users
+                        .FirstOrDefaultAsync(x => x.Id == member.AppUserId);
+
+                    var parentTransactionUser = new TransactionUser
+                    {
+                        AppUser = parentUser,
+                        Transaction = request.Transaction
+                    };
+
+                    request.Transaction.Users.Add(parentTransactionUser);
+                }
+
+                request.Transaction.Users.Add(transactionUser);
 
                 _context.Transactions.Add(request.Transaction);
 
                 var result = await _context.SaveChangesAsync() > 0;
 
-                if (!result) return Result<Unit>.Failure("Couldn't update transaction");
+                if (!result)
+                {
+                    return Result<Unit>.Failure("Couldn't create transaction");
+                }
 
                 return Result<Unit>.Success(Unit.Value);
             }

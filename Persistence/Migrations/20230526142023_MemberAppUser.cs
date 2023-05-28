@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Persistence.Migrations
 {
-    public partial class TransactionTypeAdded : Migration
+    public partial class MemberAppUser : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -30,6 +30,13 @@ namespace Persistence.Migrations
                     Id = table.Column<string>(type: "TEXT", nullable: false),
                     DisplayName = table.Column<string>(type: "TEXT", nullable: true),
                     Bio = table.Column<string>(type: "TEXT", nullable: true),
+                    Discriminator = table.Column<string>(type: "TEXT", nullable: false),
+                    Name = table.Column<string>(type: "TEXT", nullable: true),
+                    Surname = table.Column<string>(type: "TEXT", nullable: true),
+                    Access = table.Column<bool>(type: "INTEGER", nullable: true),
+                    Password = table.Column<string>(type: "TEXT", nullable: true),
+                    MemberUsername = table.Column<string>(type: "TEXT", nullable: true),
+                    AppUserId = table.Column<string>(type: "TEXT", nullable: true),
                     UserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
                     Email = table.Column<string>(type: "TEXT", maxLength: 256, nullable: true),
@@ -48,6 +55,27 @@ namespace Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AspNetUsers_AspNetUsers_AppUserId",
+                        column: x => x.AppUserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Transactions",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
+                    TransactionType = table.Column<int>(type: "INTEGER", nullable: false),
+                    Date = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Amount = table.Column<double>(type: "REAL", nullable: false),
+                    Category = table.Column<string>(type: "TEXT", nullable: true),
+                    Description = table.Column<string>(type: "TEXT", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Transactions", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -157,45 +185,27 @@ namespace Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Members",
+                name: "TransactionUsers",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Name = table.Column<string>(type: "TEXT", nullable: true),
-                    Surname = table.Column<string>(type: "TEXT", nullable: true),
-                    Access = table.Column<bool>(type: "INTEGER", nullable: false),
-                    AppUserId = table.Column<string>(type: "TEXT", nullable: true)
+                    AppUserId = table.Column<string>(type: "TEXT", nullable: false),
+                    TransactionId = table.Column<Guid>(type: "TEXT", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Members", x => x.Id);
+                    table.PrimaryKey("PK_TransactionUsers", x => new { x.AppUserId, x.TransactionId });
                     table.ForeignKey(
-                        name: "FK_Members_AspNetUsers_AppUserId",
+                        name: "FK_TransactionUsers_AspNetUsers_AppUserId",
                         column: x => x.AppUserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Transactions",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    TransactionType = table.Column<int>(type: "INTEGER", nullable: false),
-                    Date = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    Amount = table.Column<double>(type: "REAL", nullable: false),
-                    Category = table.Column<string>(type: "TEXT", nullable: true),
-                    Description = table.Column<string>(type: "TEXT", nullable: true),
-                    AppUserId = table.Column<string>(type: "TEXT", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Transactions", x => x.Id);
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Transactions_AspNetUsers_AppUserId",
-                        column: x => x.AppUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id");
+                        name: "FK_TransactionUsers_Transactions_TransactionId",
+                        column: x => x.TransactionId,
+                        principalTable: "Transactions",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -230,20 +240,20 @@ namespace Persistence.Migrations
                 column: "NormalizedEmail");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AspNetUsers_AppUserId",
+                table: "AspNetUsers",
+                column: "AppUserId");
+
+            migrationBuilder.CreateIndex(
                 name: "UserNameIndex",
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Members_AppUserId",
-                table: "Members",
-                column: "AppUserId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Transactions_AppUserId",
-                table: "Transactions",
-                column: "AppUserId");
+                name: "IX_TransactionUsers_TransactionId",
+                table: "TransactionUsers",
+                column: "TransactionId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -264,16 +274,16 @@ namespace Persistence.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Members");
-
-            migrationBuilder.DropTable(
-                name: "Transactions");
+                name: "TransactionUsers");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
+
+            migrationBuilder.DropTable(
+                name: "Transactions");
         }
     }
 }

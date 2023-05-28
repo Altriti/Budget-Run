@@ -11,8 +11,8 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230522120638_TransactionTypeAdded")]
-    partial class TransactionTypeAdded
+    [Migration("20230526142023_MemberAppUser")]
+    partial class MemberAppUser
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,6 +32,10 @@ namespace Persistence.Migrations
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("DisplayName")
@@ -87,31 +91,8 @@ namespace Persistence.Migrations
                         .HasDatabaseName("UserNameIndex");
 
                     b.ToTable("AspNetUsers", (string)null);
-                });
 
-            modelBuilder.Entity("Domain.Member", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("Access")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("AppUserId")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Surname")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AppUserId");
-
-                    b.ToTable("Members");
+                    b.HasDiscriminator<string>("Discriminator").HasValue("AppUser");
                 });
 
             modelBuilder.Entity("Domain.Transaction", b =>
@@ -122,9 +103,6 @@ namespace Persistence.Migrations
 
                     b.Property<double>("Amount")
                         .HasColumnType("REAL");
-
-                    b.Property<string>("AppUserId")
-                        .HasColumnType("TEXT");
 
                     b.Property<string>("Category")
                         .HasColumnType("TEXT");
@@ -140,9 +118,22 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AppUserId");
-
                     b.ToTable("Transactions");
+                });
+
+            modelBuilder.Entity("Domain.TransactionUser", b =>
+                {
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid>("TransactionId")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("AppUserId", "TransactionId");
+
+                    b.HasIndex("TransactionId");
+
+                    b.ToTable("TransactionUsers");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -275,18 +266,48 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Member", b =>
                 {
-                    b.HasOne("Domain.AppUser", null)
-                        .WithMany("Members")
-                        .HasForeignKey("AppUserId");
+                    b.HasBaseType("Domain.AppUser");
+
+                    b.Property<bool>("Access")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("AppUserId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("MemberUsername")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Surname")
+                        .HasColumnType("TEXT");
+
+                    b.HasIndex("AppUserId");
+
+                    b.HasDiscriminator().HasValue("Member");
                 });
 
-            modelBuilder.Entity("Domain.Transaction", b =>
+            modelBuilder.Entity("Domain.TransactionUser", b =>
                 {
                     b.HasOne("Domain.AppUser", "AppUser")
-                        .WithMany()
-                        .HasForeignKey("AppUserId");
+                        .WithMany("Transactions")
+                        .HasForeignKey("AppUserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Transaction", "Transaction")
+                        .WithMany("Users")
+                        .HasForeignKey("TransactionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("AppUser");
+
+                    b.Navigation("Transaction");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -340,9 +361,25 @@ namespace Persistence.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Domain.Member", b =>
+                {
+                    b.HasOne("Domain.AppUser", "AppUser")
+                        .WithMany("Members")
+                        .HasForeignKey("AppUserId");
+
+                    b.Navigation("AppUser");
+                });
+
             modelBuilder.Entity("Domain.AppUser", b =>
                 {
                     b.Navigation("Members");
+
+                    b.Navigation("Transactions");
+                });
+
+            modelBuilder.Entity("Domain.Transaction", b =>
+                {
+                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

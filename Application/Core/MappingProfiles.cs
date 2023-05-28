@@ -1,7 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+
+using Application.Transactions;
 using AutoMapper;
 using Domain;
 
@@ -11,7 +9,7 @@ namespace Application.Core
     {
         public MappingProfiles()
         {
-            CreateMap<Transaction, Transaction>().ForMember(x => x.AppUser, y => y.Ignore());
+            CreateMap<Transaction, Transaction>();
             CreateMap<Member, Member>();
         }
     }

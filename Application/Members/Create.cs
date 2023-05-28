@@ -7,6 +7,7 @@ using Application.Interfaces;
 using Domain;
 using FluentValidation;
 using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
@@ -31,8 +32,10 @@ namespace Application.Members
         {
             private readonly DataContext _context;
             private readonly IUserAccessor _userAccessor;
-            public Handler(DataContext context, IUserAccessor userAccessor)
+            private readonly UserManager<AppUser> _userManager;
+            public Handler(DataContext context, IUserAccessor userAccessor, UserManager<AppUser> userManager)
             {
+                _userManager = userManager;
                 _userAccessor = userAccessor;
                 _context = context;
             }
@@ -50,6 +53,20 @@ namespace Application.Members
                 var result = await _context.SaveChangesAsync() > 0;
 
                 if (!result) return Result<Unit>.Failure("Couldn't add member");
+
+                var userMember = new AppUser
+                {
+                    DisplayName = request.Member.DisplayName,
+                    Email = request.Member.Email,
+                    UserName = request.Member.MemberUsername,
+                };
+
+                var userMemberResult = await _userManager.CreateAsync(userMember, request.Member.Password);
+
+                if (!userMemberResult.Succeeded)
+                {
+                    return Result<Unit>.Failure("Couldn't add member as user");
+                };
 
                 return Result<Unit>.Success(Unit.Value);
             }
