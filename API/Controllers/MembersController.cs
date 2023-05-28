@@ -13,7 +13,7 @@ namespace API.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetMember(Guid id)
+        public async Task<IActionResult> GetMember(string id)
         {
             return HandleResult(await Mediator.Send(new Details.Query { Id = id }));
         }
@@ -32,13 +32,13 @@ namespace API.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMember(Guid id)
+        public async Task<IActionResult> DeleteMember(string id)
         {
             return HandleResult(await Mediator.Send(new Delete.Command { Id = id }));
         }
 
         [HttpPost("access/{id}")]
-        public async Task<IActionResult> ManageMember(Guid id)
+        public async Task<IActionResult> ManageMember(string id)
         {
             return HandleResult(await Mediator.Send(new MemberAccess.Command { Id = id }));
         }

@@ -9,7 +9,7 @@ namespace Application.Members
     {
         public class Query : IRequest<Result<Member>>
         {
-            public Guid Id { get; set; }
+            public string Id { get; set; }
         }
 
         public class Handler : IRequestHandler<Query, Result<Member>>

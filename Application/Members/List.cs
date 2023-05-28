@@ -1,5 +1,6 @@
 using Application.Core;
 using Application.Interfaces;
+using AutoMapper;
 using Domain;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -9,19 +10,21 @@ namespace Application.Members
 {
     public class List
     {
-        public class Query : IRequest<Result<List<Member>>> { }
+        public class Query : IRequest<Result<List<MemberDto>>> { }
 
-        public class Handler : IRequestHandler<Query, Result<List<Member>>>
+        public class Handler : IRequestHandler<Query, Result<List<MemberDto>>>
         {
             private readonly DataContext _context;
             private readonly IUserAccessor _userAccessor;
-            public Handler(DataContext context, IUserAccessor userAccessor)
+            private readonly IMapper _mapper;
+            public Handler(DataContext context, IUserAccessor userAccessor, IMapper mapper)
             {
+                _mapper = mapper;
                 _userAccessor = userAccessor;
                 _context = context;
             }
 
-            public async Task<Result<List<Member>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<MemberDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
                 //The logic used here is big brain. 100% from my brain, so proud.
                 var user = await _context.Users.Include(x => x.Members).FirstOrDefaultAsync(x => x.Id == _userAccessor.GetUserId());
@@ -42,7 +45,10 @@ namespace Application.Members
                         };
                     };
                 };
-                return Result<List<Member>>.Success(membersToReturn);
+
+                var returningMembers = _mapper.Map<List<MemberDto>>(membersToReturn);
+
+                return Result<List<MemberDto>>.Success(returningMembers);
             }
         }
     }
