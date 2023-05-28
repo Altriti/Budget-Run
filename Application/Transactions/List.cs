@@ -10,9 +10,9 @@ namespace Application.Transactions
 {
     public class List
     {
-        public class Query : IRequest<Result<List<Transaction>>> { }
+        public class Query : IRequest<Result<List<TransactionDto>>> { }
 
-        public class Handler : IRequestHandler<Query, Result<List<Transaction>>>
+        public class Handler : IRequestHandler<Query, Result<List<TransactionDto>>>
         {
             private readonly DataContext _context;
             private readonly IUserAccessor _userAccessor;
@@ -24,14 +24,17 @@ namespace Application.Transactions
                 _context = context;
             }
 
-            public async Task<Result<List<Transaction>>> Handle(Query request, CancellationToken cancellationToken)
+            public async Task<Result<List<TransactionDto>>> Handle(Query request, CancellationToken cancellationToken)
             {
                 var transactions = await _context.Transactions
                     .Include(x => x.Users)
+                    .ThenInclude(x => x.AppUser)
                     .Where(z => z.Users.Any(u => u.AppUserId == _userAccessor.GetUserId()))
                     .ToListAsync(cancellationToken);
 
-                return Result<List<Transaction>>.Success(transactions);
+                var transactionsToReturn = _mapper.Map<List<TransactionDto>>(transactions);
+
+                return Result<List<TransactionDto>>.Success(transactionsToReturn);
             }
         }
     }
