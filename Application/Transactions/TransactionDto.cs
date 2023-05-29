@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Application.Profiles;
 
 namespace Application.Transactions
@@ -14,6 +10,7 @@ namespace Application.Transactions
         public double Amount { get; set; }
         public string Category { get; set; }
         public string Description { get; set; }
+        public string Creator { get; set; }
         public ICollection<Profile> Users { get; set; }
     }
 }

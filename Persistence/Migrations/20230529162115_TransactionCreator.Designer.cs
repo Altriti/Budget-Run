@@ -11,8 +11,8 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230526142023_MemberAppUser")]
-    partial class MemberAppUser
+    [Migration("20230529162115_TransactionCreator")]
+    partial class TransactionCreator
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -105,6 +105,9 @@ namespace Persistence.Migrations
                         .HasColumnType("REAL");
 
                     b.Property<string>("Category")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Creator")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("Date")

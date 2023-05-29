@@ -44,6 +44,8 @@ namespace Application.Transactions
                     return Result<Unit>.Failure("You should be logged in to add a transaction");
                 }
 
+                request.Transaction.Creator = user.DisplayName;
+
                 var transactionUser = new TransactionUser
                 {
                     AppUser = user,

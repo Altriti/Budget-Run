@@ -9,7 +9,8 @@ namespace Application.Core
     {
         public MappingProfiles()
         {
-            CreateMap<Transaction, Transaction>();
+            CreateMap<Transaction, Transaction>()
+                .ForMember(d => d.Creator, o => o.Ignore());
 
             CreateMap<Member, Member>()
                 .ForMember(d => d.AppUserId, o => o.Ignore())
@@ -32,6 +33,7 @@ namespace Application.Core
                 .ForMember(d => d.Amount, o => o.MapFrom(s => s.Transaction.Amount))
                 .ForMember(d => d.Category, o => o.MapFrom(s => s.Transaction.Category))
                 .ForMember(d => d.Description, o => o.MapFrom(s => s.Transaction.Description))
+                .ForMember(d => d.Creator, o => o.MapFrom(s => s.Transaction.Creator))
                 .ForMember(d => d.Users, o => o.MapFrom(s => s.Transaction.Users));
 
 
