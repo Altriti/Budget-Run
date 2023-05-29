@@ -10,15 +10,33 @@ namespace Application.Core
         public MappingProfiles()
         {
             CreateMap<Transaction, Transaction>();
+
             CreateMap<Member, Member>()
-                .ForMember(x => x.AppUserId, o => o.Ignore())
-                .ForMember(x => x.AppUser, o => o.Ignore());
+                .ForMember(d => d.AppUserId, o => o.Ignore())
+                .ForMember(d => d.AppUser, o => o.Ignore());
+
             CreateMap<Transaction, TransactionDto>()
                     .ForMember(x => x.Users, o => o.MapFrom(y => y.Users));
+
             CreateMap<TransactionUser, Profiles.Profile>()
+                .ForMember(d => d.Id, o => o.MapFrom(s => s.AppUser.Id))
                 .ForMember(d => d.DisplayName, o => o.MapFrom(s => s.AppUser.DisplayName))
                 .ForMember(d => d.Username, o => o.MapFrom(s => s.AppUser.UserName));
+
             CreateMap<Member, MemberDto>();
+
+            CreateMap<TransactionUser, TransactionDto>()
+                .ForMember(d => d.Id, o => o.MapFrom(s => s.Transaction.Id))
+                .ForMember(d => d.TransactionType, o => o.MapFrom(s => s.Transaction.TransactionType))
+                .ForMember(d => d.Date, o => o.MapFrom(s => s.Transaction.Date))
+                .ForMember(d => d.Amount, o => o.MapFrom(s => s.Transaction.Amount))
+                .ForMember(d => d.Category, o => o.MapFrom(s => s.Transaction.Category))
+                .ForMember(d => d.Description, o => o.MapFrom(s => s.Transaction.Description))
+                .ForMember(d => d.Users, o => o.MapFrom(s => s.Transaction.Users));
+
+
+            CreateMap<Member, MemberDetailsDto>()
+                .ForMember(d => d.Transactions, o => o.MapFrom(s => s.AppUser.Transactions));
         }
     }
 }
