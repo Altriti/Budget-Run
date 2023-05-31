@@ -6,7 +6,7 @@ interface Props {
 
 export default function EmptyComponent({ typeOfList }: Props) {
     return (
-        <Segment>
+        <Segment raised>
             There are no {typeOfList}
         </Segment>
     )

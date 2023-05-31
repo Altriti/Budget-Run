@@ -6,7 +6,7 @@ import { observer } from "mobx-react-lite";
 export default observer(function NavBar() {
     const { userStore: { user, logout } } = useStore();
     return (
-        <Menu inverted fixed='top'>
+        <Menu inverted fixed='top' >
             <Container>
                 <Menu.Item header as={NavLink} to='/'>
                     <Icon size="big" name="money" style={{ marginRight: '10px' }} />

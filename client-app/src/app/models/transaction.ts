@@ -1,4 +1,4 @@
-import { User } from "./user";
+import { Profile } from "./profile";
 
 export interface Transaction {
     id: string;
@@ -7,6 +7,6 @@ export interface Transaction {
     amount: number;
     category: string;
     description: string;
-    appUserId: string;
-    appUser?: User;
+    creator: string;
+    users?: Profile[];
 }

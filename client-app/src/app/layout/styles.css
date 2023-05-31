@@ -13,3 +13,19 @@ body {
 .dashboard-segment-hover:hover {
   filter: brightness(1.1) !important;
 }
+/* .deleteButtonHover {
+  background-color: white !important;
+  color: red !important;
+  border: 1px solid red !important;
+}
+.deleteButtonHover:hover {
+  background-color: #dc3030 !important;
+  color: white !important;
+} */
+.deleteButton {
+  background-color: white !important;
+  color: red !important;
+}
+.deleteButton:hover {
+  border: 1px solid red !important;
+}

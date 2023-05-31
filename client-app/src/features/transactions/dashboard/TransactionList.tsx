@@ -8,55 +8,64 @@ import EmptyComponent from "../../../app/layout/EmptyComponent";
 
 export default observer(function TransactionList() {
     const [target, setTarget] = useState('');
-    const { transactionStore } = useStore();
+    const { transactionStore, userStore } = useStore();
     const { deleteTransaction, transactionsByDate, loading } = transactionStore;
+    const { user: loggedUser } = userStore;
 
     function handletransactionDelete(e: SyntheticEvent<HTMLButtonElement>, id: string) {
         setTarget(e.currentTarget.name);
         deleteTransaction(id);
     };
 
-    if (transactionStore.transactionRegistry.size === 0) return <EmptyComponent typeOfList="Transactions"/>
+    if (transactionStore.transactionRegistry.size === 0) return <EmptyComponent typeOfList="Transactions" />
 
     return (
-        <Segment>
+        <Segment raised>
             <Header style={{ fontWeight: "bold", fontSize: '13px', textDecoration: 'underline', color: 'red' }}>TRANSACTIONS</Header>
             <Item.Group divided>
                 {transactionsByDate.map(transaction => (
-                    <Item key={transaction.id}>
-                        <Item.Content>
-                            <Item.Header as='a' style={{ width: '100%', }}>
-                                <Grid>
-                                    <Grid.Column width='13'>
+                    <Item key={transaction.id} as={Link} to={`/transactions/${transaction.id}`}>
+                        <Item.Content >
+                            <Item.Header style={{ width: '100%', }}>
+                                <Grid
+                                    style={{
+                                        textDecoration: 'underline',
+                                        textDecorationColor: transaction.transactionType === "Expense" ? 'red' : 'blue'
+                                    }}
+                                >
+                                    <Grid.Column width='13' >
                                         {transaction.description}
                                     </Grid.Column>
                                     <Grid.Column width='3' textAlign='right'>
-                                        <Label tag color="red">{transaction.amount} &euro;</Label>
+                                        <Label tag color={transaction.transactionType === "Expense" ? 'red' : 'blue'}>{transaction.amount} &euro;</Label>
                                     </Grid.Column>
                                 </Grid>
                             </Item.Header>
                             <Item.Meta>{format(transaction.date!, 'dd MMM yyyy')}</Item.Meta>
-                            <Segment basic>
+                            <Segment basic >
                                 <Button
-                                    as={Link} to={`/transactions/${transaction.id}`}
-                                    floated='right'
-                                    content='View'
-                                    color='blue'
-                                    basic
-                                    size="small"
-                                />
-                                <Button
+                                    className="deleteButton"
                                     name={transaction.id}
                                     loading={loading && target === transaction.id}
                                     onClick={(e) => handletransactionDelete(e, transaction.id)}
                                     floated='right'
                                     content='Delete'
                                     color='red'
-                                    basic
-                                    size="small"
+                                    size="tiny"
                                 />
                                 <Label basic content={transaction.category} />
-                                <Label basic content={transaction.transactionType} />
+                                <Label
+                                    basic
+                                    color={transaction.transactionType === "Expense" ? 'red' : 'blue'}
+                                    content={transaction.transactionType}
+                                />
+                                {transaction.creator.length !== 0 ?
+                                    transaction.creator === loggedUser?.displayName ? (
+                                        <Label basic content='You' />
+                                    ) : (
+                                        <Label basic content={transaction.creator} />
+                                    ) : <Label basic content='You' />
+                                }
                             </Segment>
                         </Item.Content>
                     </Item>
