@@ -33,7 +33,7 @@ export default class MemberStore {
 
     loadMember = async (id: string) => {
         let member = this.getMember(id);
-        if (member) {
+        if (member?.transactions != null) {
             this.selectedMember = member;
             return member;
         } else {
@@ -41,7 +41,9 @@ export default class MemberStore {
             try {
                 member = await agent.Members.details(id);
                 this.setMember(member);
-                this.selectedMember = member
+                runInAction(() => {
+                    this.selectedMember = member
+                });
                 this.setLoadingInitial(false);
                 return member;
             } catch (error) {

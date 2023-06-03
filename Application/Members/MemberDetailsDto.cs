@@ -8,9 +8,10 @@ namespace Application.Members
         public string Name { get; set; }
         public string Surname { get; set; }
         public string DisplayName { get; set; }
-        public bool Access { get; set; }
+        public string Email { get; set; }
         public string Password { get; set; }
         public string MemberUsername { get; set; }
+        public bool Access { get; set; }
         public ICollection<TransactionDto> Transactions { get; set; }
     }
 }

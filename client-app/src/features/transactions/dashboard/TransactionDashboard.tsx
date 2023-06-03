@@ -27,14 +27,16 @@ export default observer(function TransactionDashboard() {
                 {/* {selectedTransaction &&
                     <TransactionDetails />} */}
             </Grid.Column>
-            <Button animated style={{ position: 'fixed', bottom: '1em', right: '1em' }}
+            <Button
+                animated
+                style={{ position: 'fixed', bottom: '1em', right: '1em' }}
                 as={NavLink}
                 to='/createTransaction'
                 color='red'
                 size='big'
                 circular
             >
-                <Button.Content visible><Icon name='plus' /></Button.Content>
+                <Button.Content visible ><Icon name='plus' style={{ paddingLeft: '10px' }} /></Button.Content>
                 <Button.Content hidden>ADD</Button.Content>
             </Button>
         </Grid>

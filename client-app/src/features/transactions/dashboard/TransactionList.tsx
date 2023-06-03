@@ -1,8 +1,8 @@
-import { Button, Grid, Header, Icon, Item, Label, Segment } from "semantic-ui-react";
+import { Button, Grid, Header, Item, Label, Segment } from "semantic-ui-react";
 import { SyntheticEvent, useState } from "react";
 import { useStore } from "../../../app/stores/store";
 import { observer } from "mobx-react-lite";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { format } from "date-fns";
 import EmptyComponent from "../../../app/layout/EmptyComponent";
 
@@ -21,12 +21,18 @@ export default observer(function TransactionList() {
 
     return (
         <Segment raised>
-            <Header style={{ fontWeight: "bold", fontSize: '13px', textDecoration: 'underline', color: 'red' }}>TRANSACTIONS</Header>
+            <Header
+                style={{ fontWeight: "bold", fontSize: '13px', textDecoration: 'underline', color: 'red' }}
+            >
+                TRANSACTIONS
+            </Header>
             <Item.Group divided>
                 {transactionsByDate.map(transaction => (
-                    <Item key={transaction.id} as={Link} to={`/transactions/${transaction.id}`}>
+                    <Item key={transaction.id}>
                         <Item.Content >
-                            <Item.Header style={{ width: '100%', }}>
+                            <Item.Header
+                                as={Link} to={`/transactions/${transaction.id}`}
+                                style={{ width: '100%', }}>
                                 <Grid
                                     style={{
                                         textDecoration: 'underline',
@@ -37,7 +43,12 @@ export default observer(function TransactionList() {
                                         {transaction.description}
                                     </Grid.Column>
                                     <Grid.Column width='3' textAlign='right'>
-                                        <Label tag color={transaction.transactionType === "Expense" ? 'red' : 'blue'}>{transaction.amount} &euro;</Label>
+                                        <Label
+                                            tag
+                                            color={transaction.transactionType === "Expense" ? 'red' : 'blue'}
+                                        >
+                                            {transaction.amount} &euro;
+                                        </Label>
                                     </Grid.Column>
                                 </Grid>
                             </Item.Header>
@@ -71,16 +82,6 @@ export default observer(function TransactionList() {
                     </Item>
                 ))}
             </Item.Group>
-            <Button animated style={{ position: 'fixed', bottom: '1em', right: '1em' }}
-                as={NavLink}
-                to='/createTransaction'
-                color='red'
-                size='big'
-                circular
-            >
-                <Button.Content visible><Icon name='plus' /></Button.Content>
-                <Button.Content hidden>ADD</Button.Content>
-            </Button>
         </Segment >
     )
 });

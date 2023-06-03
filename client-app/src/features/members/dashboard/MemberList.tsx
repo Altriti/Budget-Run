@@ -20,12 +20,21 @@ export default observer(function MemberList() {
 
     return (
         <Segment>
-            <Header style={{ fontWeight: "bold", fontSize: '13px', textDecoration: 'underline', color: 'red' }}>MEMBERS</Header>
+            <Header
+                style={{
+                    fontWeight: "bold", fontSize: '13px', textDecoration: 'underline', color: 'red'
+                }}
+            >
+                MEMBERS
+            </Header>
             <Item.Group divided>
                 {membersArr.map(member => (
                     <Item key={member.id}>
                         <Item.Content>
-                            <Item.Header as='a' style={{ width: '100%', }}>
+                            <Item.Header
+                                as={Link}
+                                to={`/members/${member.id}`}
+                                style={{ width: '100%', }}>
                                 <Grid>
                                     <Grid.Column>
                                         {member.name} {member.surname}
@@ -34,25 +43,16 @@ export default observer(function MemberList() {
                             </Item.Header>
                             <Segment basic>
                                 <Button
-                                    as={Link}
-                                    to={`/members/${member.id}`}
-                                    floated='right'
-                                    content='View'
-                                    color='blue'
-                                    basic
-                                    size="small"
-                                />
-                                <Button
+                                    className="deleteButton"
                                     name={member.id}
                                     loading={loading && target === member.id}
                                     onClick={(e) => handleMemberDelete(e, member.id)}
                                     floated='right'
                                     content='Delete'
                                     color='red'
-                                    basic
-                                    size="small"
+                                    size="tiny"
                                 />
-                                <Label basic content='label' />
+                                <Label basic content={member.displayName} />
                                 <Button
                                     name={member.id}
                                     content={member.access ? 'Granted' : 'Denied'}
@@ -65,16 +65,6 @@ export default observer(function MemberList() {
                     </Item>
                 ))}
             </Item.Group>
-            <Button animated style={{ position: 'fixed', bottom: '1em', right: '1em' }}
-                as={NavLink}
-                to='/createMember'
-                color='red'
-                size='big'
-                circular
-            >
-                <Button.Content visible><Icon name='plus' /></Button.Content>
-                <Button.Content hidden>ADD</Button.Content>
-            </Button>
         </Segment >
     )
 })

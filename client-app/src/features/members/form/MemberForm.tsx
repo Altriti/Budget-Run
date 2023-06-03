@@ -19,12 +19,20 @@ export default observer(function MemberForm() {
     const [member, setMember] = useState<Member>({
         id: '',
         name: '',
-        surname: ''
+        surname: '',
+        displayName: '',
+        email: '',
+        password: '',
+        memberUsername: ''
     });
 
     const validationSchema = Yup.object({
         name: Yup.string().required('Name is required'),
-        surname: Yup.string().required('Surname is required')
+        surname: Yup.string().required('Surname is required'),
+        displayName: Yup.string().required('DisplayName is required'),
+        email: Yup.string().required('Email is required'),
+        password: Yup.string().required('Password is required'),
+        memberUsername: Yup.string().required('MemberUsername is required')
     });
 
     useEffect(() => {
@@ -55,6 +63,10 @@ export default observer(function MemberForm() {
                     <Form className="ui form" onSubmit={handleSubmit} autoComplete='off'>
                         <MyTextInput placeholder="Name" name="name" />
                         <MyTextInput placeholder="Surname" name="surname" />
+                        <MyTextInput placeholder="DisplayName" name="displayName" />
+                        <MyTextInput placeholder="Email" name="email" />
+                        <MyTextInput placeholder="Password" name="password" />
+                        <MyTextInput placeholder="MemberUsername" name="memberUsername" />
                         <Button
                             disabled={!isValid || !dirty || isSubmitting}
                             loading={loading}

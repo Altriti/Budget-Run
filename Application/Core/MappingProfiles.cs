@@ -15,7 +15,8 @@ namespace Application.Core
 
             CreateMap<Member, Member>()
                 .ForMember(d => d.AppUserId, o => o.Ignore())
-                .ForMember(d => d.AppUser, o => o.Ignore());
+                .ForMember(d => d.AppUser, o => o.Ignore())
+                .ForMember(d => d.Transactions, o => o.Ignore());
 
             CreateMap<Transaction, TransactionDto>()
                     .ForMember(x => x.Users, o => o.MapFrom(y => y.Users));

@@ -7,7 +7,6 @@ export default class TransactionStore {
     transactionRegistry = new Map<string, Transaction>();
     loadingInitial = false;
     selectedTransaction: Transaction | undefined = undefined;
-    editMode = false;
     loading = false;
 
     constructor() {
@@ -73,7 +72,6 @@ export default class TransactionStore {
             await agent.Transactions.create(transaction);
             this.transactionRegistry.set(transaction.id, transaction);
             this.selectedTransaction = transaction;
-            this.editMode = false;
             this.loading = false;
         } catch (error) {
             console.log(error);
@@ -91,7 +89,6 @@ export default class TransactionStore {
                 //this.transactions = [...this.transactions.filter(x => x.id !== transaction.id), transaction];// filter e krijon ni array t're me transaksione dhe e hek transaksionin qe e ka id e njejt me id e transaksionit qe po i vjen. Tani e shton transaksionin e ri ne array e re
                 this.transactionRegistry.set(transaction.id, transaction);
                 this.selectedTransaction = transaction;
-                this.editMode = false;
                 this.loading = false;
             });
         } catch (error) {

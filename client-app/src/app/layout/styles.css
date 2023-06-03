@@ -29,3 +29,6 @@ body {
 .deleteButton:hover {
   border: 1px solid red !important;
 }
+.blueHover:hover {
+  color: blue;
+}
