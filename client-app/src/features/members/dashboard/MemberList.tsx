@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
-import { Button, Grid, Header, Icon, Item, Label, Segment } from "semantic-ui-react";
+import { Button, Grid, Header, Item, Label, Segment } from "semantic-ui-react";
 import { useStore } from "../../../app/stores/store";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { SyntheticEvent, useState } from "react";
 import EmptyComponent from "../../../app/layout/EmptyComponent";
 

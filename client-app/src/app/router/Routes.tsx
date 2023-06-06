@@ -1,6 +1,6 @@
 import { Navigate, RouteObject, createBrowserRouter } from "react-router-dom";
 import App from "../layout/App";
-import HomePage from "../../features/home/HomePgae";
+import HomePage from "../../features/home/HomePage";
 import TransactionDashboard from "../../features/transactions/dashboard/TransactionDashboard";
 import TransactionForm from "../../features/transactions/form/TransactionForm";
 import TransactionDetails from "../../features/transactions/details/TransactionDetails";

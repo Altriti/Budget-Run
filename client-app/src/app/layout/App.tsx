@@ -12,6 +12,7 @@ import AppDashboard from './AppDashboard';
 
 function App() {
   const { commonStore, userStore } = useStore();
+  const { isLoggedIn } = userStore;
 
   useEffect(() => {
     if (commonStore.token) {
@@ -29,10 +30,12 @@ function App() {
       <NavBar />
       <Grid style={{ marginTop: '2em' }}>
         <Grid.Row>
-          <Grid.Column width='3'>
-            <AppDashboard />
-          </Grid.Column>
-          <Grid.Column width='12'>
+          {isLoggedIn ?
+            <Grid.Column width='3'>
+              <AppDashboard />
+            </Grid.Column>
+            : null}
+          <Grid.Column width={isLoggedIn ? '12' : '16'}>
             <Outlet />
           </Grid.Column>
         </Grid.Row>

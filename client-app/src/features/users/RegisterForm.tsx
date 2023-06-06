@@ -8,6 +8,7 @@ import ValidationError from "../errors/ValidationErrors";
 
 export default observer(function RegisterForm() {
     const { userStore } = useStore();
+
     return (
         <Formik
             initialValues={{ displayName: '', username: '', email: '', password: '', error: null }}
@@ -16,13 +17,13 @@ export default observer(function RegisterForm() {
             validationSchema={Yup.object({
                 displayName: Yup.string().required(),
                 username: Yup.string().required(),
-                email: Yup.string().required(),
+                email: Yup.string().email().required(),
                 password: Yup.string().required(),
             })}
         >
             {({ handleSubmit, isSubmitting, errors, isValid, dirty }) => (
                 <Form className="ui form error" onSubmit={handleSubmit} autoComplete="off">
-                    <Header as='h2' content='Register' color="teal" textAlign="center" />
+                    <Header as='h2' content='Register' color="red" textAlign="center" />
                     <MyTextInput placeholder="Display Name" name="displayName" />
                     <MyTextInput placeholder="Username" name="username" />
                     <MyTextInput placeholder="Email" name="email" />
@@ -33,7 +34,7 @@ export default observer(function RegisterForm() {
                     />
                     <Button
                         loading={isSubmitting}
-                        positive
+                        negative
                         content='Register'
                         type="submit"
                         fluid
