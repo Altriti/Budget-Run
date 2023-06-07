@@ -3,6 +3,9 @@ import { useStore } from "../../app/stores/store";
 import { observer } from "mobx-react-lite";
 import LoginForm from "../users/LoginForm";
 import RegisterForm from "../users/RegisterForm";
+import Slider from "react-slick";
+import 'slick-carousel/slick/slick.css';
+
 
 export default observer(function HomePage() {
     const { userStore, modalStore } = useStore();
@@ -54,17 +57,17 @@ export default observer(function HomePage() {
                             </Grid>
                         </Segment>
                         <Segment raised style={{ marginLeft: '1%', width: '98%', height: '50em' }}>
-                            <Grid>
+                            <Grid style={{ margin: '0 5em 0 5em' }}>
                                 <Grid.Column
-                                    width='8'
+                                    width='6'
                                     style={{
-                                        height: '50em', display: 'flex', justifyContent: 'center'
+                                        height: '50em', display: 'flex', justifyContent: 'center', alignItems: 'center'
                                     }}
                                 >
-                                    <Image src={`/assets/homepagePic.jpg`} style={{ borderRadius: '50%' }} />
+                                    <Image src={`/assets/homepagePic.jpg`} style={{ borderRadius: '50%', height: '32em' }} />
                                 </Grid.Column>
                                 <Grid.Column
-                                    width='8'
+                                    width='10'
                                     style={{
                                         height: '50em', display: 'flex', justifyContent: 'center', alignItems: 'center'
                                     }}
@@ -84,35 +87,99 @@ export default observer(function HomePage() {
                                 </Grid.Column>
                             </Grid>
                         </Segment>
-                        <Segment raised style={{ marginLeft: '1%', width: '98%', height: '50em' }}>
-                            <Grid>
-                                <Grid.Column
-                                    width='8'
-                                    style={{
-                                        height: '50em', display: 'flex', justifyContent: 'center', alignItems: 'center'
-                                    }}
-                                >
-                                    <div style={{ textAlign: 'center' }}>
-                                        <h2 style={{ fontSize: '50px', color: 'red' }}>You can see your family's transactions too</h2>
-                                        <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                            <p style={{ display: 'inline', fontSize: '25px' }}>
-                                                We offer you monitoring over your family members too. You can see their
-                                                <span style={{ display: 'inline', color: 'red' }}> Expenses</span> and
-                                                <span style={{ display: 'inline', color: 'blue' }}> Incomes </span>. <br />
-                                                If you have children who are students, you can observe their transactions and see their financial states
-                                            </p>
-                                        </div>
-                                    </div>
-                                </Grid.Column>
-                                <Grid.Column
-                                    width='8'
-                                    style={{
-                                        height: '50em', display: 'flex', justifyContent: 'center'
-                                    }}
-                                >
-                                    <Image src={`/assets/hpFamilyPhoto.jpg`} style={{ borderRadius: '50%' }} />
-                                </Grid.Column>
-                            </Grid>
+                        <Segment style={{ marginLeft: '1%', width: '98%', height: '55em' }}>
+                            <Slider>
+                                <Segment raised style={{ marginLeft: '1%', width: '98%', height: '50em' }}>
+                                    <Grid style={{ margin: '0 5em 0 5em' }}>
+                                        <Grid.Column
+                                            width='10'
+                                            style={{
+                                                height: '50em', display: 'flex', justifyContent: 'center', alignItems: 'center'
+                                            }}
+                                        >
+                                            <div style={{ textAlign: 'center' }}>
+                                                <h2 style={{ fontSize: '50px', color: 'red' }}>You can see your family's transactions too</h2>
+                                                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                                    <p style={{ display: 'inline', fontSize: '25px' }}>
+                                                        We offer you monitoring over your family members too. You can see their
+                                                        <span style={{ display: 'inline', color: 'red' }}> Expenses</span> and
+                                                        <span style={{ display: 'inline', color: 'blue' }}> Incomes </span>. <br />
+                                                        If you have children who are students, you can observe their transactions and see their financial states
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </Grid.Column>
+                                        <Grid.Column
+                                            width='6'
+                                            style={{
+                                                height: '50em', display: 'flex', justifyContent: 'center', alignItems: 'center'
+                                            }}
+                                        >
+                                            <Image src={`/assets/hpFamilyPhoto.jpg`} style={{ borderRadius: '50%', height: '32em', width: '32em' }} />
+                                        </Grid.Column>
+                                    </Grid>
+                                </Segment>
+                                <Segment raised style={{ marginLeft: '1%', width: '98%', height: '50em' }}>
+                                    <Grid style={{ margin: '0 5em 0 5em' }}>
+                                        <Grid.Column
+                                            width='10'
+                                            style={{
+                                                height: '50em', display: 'flex', justifyContent: 'center', alignItems: 'center'
+                                            }}
+                                        >
+                                            <div style={{ textAlign: 'center' }}>
+                                                <h2 style={{ fontSize: '50px', color: 'red' }}>You can have as many members as you want</h2>
+                                                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                                    <p style={{ display: 'inline', fontSize: '25px' }}>
+                                                        You will have a list of members you have added. Members can add
+                                                        <span style={{ display: 'inline', color: 'red' }}> Expenses</span> or
+                                                        <span style={{ display: 'inline', color: 'blue' }}> Incomes </span>. <br />
+                                                        You have control over members and can manage their access whether
+                                                        they can or cannot add transactions.
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </Grid.Column>
+                                        <Grid.Column
+                                            width='6'
+                                            style={{
+                                                height: '50em', display: 'flex', justifyContent: 'center', alignItems: 'center'
+                                            }}
+                                        >
+                                            <Image src={`/assets/hpMembersList.png`} style={{ borderRadius: '50%', height: '32em', width: '32em' }} />
+                                        </Grid.Column>
+                                    </Grid>
+                                </Segment>
+                                <Segment raised style={{ marginLeft: '1%', width: '98%', height: '50em' }}>
+                                    <Grid style={{ margin: '0 5em 0 5em' }}>
+                                        <Grid.Column
+                                            width='10'
+                                            style={{
+                                                height: '50em', display: 'flex', justifyContent: 'center', alignItems: 'center'
+                                            }}
+                                        >
+                                            <div style={{ textAlign: 'center' }}>
+                                                <h2 style={{ fontSize: '50px', color: 'red' }}>You can see each member's details</h2>
+                                                <div style={{ display: 'flex', flexDirection: 'column' }}>
+                                                    <p style={{ display: 'inline', fontSize: '25px' }}>
+                                                        You will be able to see every member's details including a list of their
+                                                        <span style={{ display: 'inline', color: 'red' }}> Expenses</span> and
+                                                        <span style={{ display: 'inline', color: 'blue' }}> Incomes </span>. <br />
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </Grid.Column>
+                                        <Grid.Column
+                                            width='6'
+                                            style={{
+                                                height: '50em', display: 'flex', justifyContent: 'center', alignItems: 'center'
+                                            }}
+                                        >
+                                            <Image src={`/assets/hpMemberDet.png`} style={{ borderRadius: '50%', height: '32em', width: '32em' }} />
+                                        </Grid.Column>
+                                    </Grid>
+                                </Segment>
+                            </Slider>
                         </Segment>
                     </>
                 )

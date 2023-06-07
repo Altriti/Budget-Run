@@ -32,3 +32,26 @@ body {
 .blueHover:hover {
   color: blue;
 }
+.slick-prev,
+.slick-next {
+  cursor: pointer;
+  background-color: #dc3030;
+  color: white;
+  font-size: 16px;
+  width: 42px;
+  height: 40px;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  z-index: 1;
+}
+
+.slick-prev {
+  left: 1em;
+}
+
+.slick-next {
+  right: 1em;
+}
+
+
