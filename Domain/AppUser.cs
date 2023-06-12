@@ -8,5 +8,7 @@ namespace Domain
         public string Bio { get; set; }
         public ICollection<Member> Members { get; set; }
         public ICollection<TransactionUser> Transactions { get; set; }
+        public double IncomeTotal { get; set; }
+        public double ExpenseTotal { get; set; }
     }
 }

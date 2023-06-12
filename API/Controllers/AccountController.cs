@@ -96,7 +96,9 @@ namespace API.Controllers
             {
                 DisplayName = user.DisplayName,
                 Token = _tokenService.CreateToken(user),
-                UserName = user.UserName
+                UserName = user.UserName,
+                ExpenseTotal = user.ExpenseTotal,
+                IncomeTotal = user.IncomeTotal
             };
         }
     }

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Persistence.Migrations
 {
-    public partial class TransactionCreator : Migration
+    public partial class AppUserBalance : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -30,6 +30,8 @@ namespace Persistence.Migrations
                     Id = table.Column<string>(type: "TEXT", nullable: false),
                     DisplayName = table.Column<string>(type: "TEXT", nullable: true),
                     Bio = table.Column<string>(type: "TEXT", nullable: true),
+                    IncomeTotal = table.Column<double>(type: "REAL", nullable: false),
+                    ExpenseTotal = table.Column<double>(type: "REAL", nullable: false),
                     Discriminator = table.Column<string>(type: "TEXT", nullable: false),
                     Name = table.Column<string>(type: "TEXT", nullable: true),
                     Surname = table.Column<string>(type: "TEXT", nullable: true),

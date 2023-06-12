@@ -9,8 +9,9 @@ import { Transaction } from "../../../app/models/transaction";
 import EmptyComponent from "../../../app/layout/EmptyComponent";
 
 export default observer(function MemberDetails() {
-    const { memberStore } = useStore();
+    const { memberStore, userStore } = useStore();
     const { selectedMember: member, loadingInitial, loadMember, manageAccess } = memberStore;
+    const { user: loggedUser } = userStore;
     const { id } = useParams();
     const [transactionsByDate, setTransactionsByDate] = useState<Transaction[]>([]);
     const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -39,6 +40,21 @@ export default observer(function MemberDetails() {
         <Card fluid>
             <Card.Content>
                 <Card.Header width='8'>{member.name} {member.surname}
+                    {member.transactions?.[0].users?.map(user => (
+                        user.displayName !== loggedUser?.displayName && (
+                            <span key={user.id} style={{ marginLeft: '5em' }}>
+                                <span style={{ color: 'blue', marginRight: '3em' }}>
+                                    {user.incomeTotal?.toFixed(1)}€
+                                </span>
+                                <span style={{ color: 'red', marginRight: '3em' }}>
+                                    {user.expenseTotal?.toFixed(1)}€
+                                </span>
+                                {user.incomeTotal !== undefined && user.expenseTotal !== undefined && (
+                                    <span style={{ color: 'black' }}>{(user.incomeTotal - user.expenseTotal).toFixed(1)}€</span>
+                                )}
+                            </span>
+                        )
+                    ))}
                     <Button
                         width='4'
                         as={Link} to={`/members/manage/${member.id}`}

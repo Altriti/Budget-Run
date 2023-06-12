@@ -42,7 +42,7 @@ export default function AppDashboard() {
                                 to='/members'
                                 inverted
                                 style={{ fontSize: '20px', backgroundColor: '#dc3030' }}>
-                                MEMBERS
+                                
                             </Segment>
                         </Grid.Column>
                     </Grid.Row>
@@ -54,7 +54,7 @@ export default function AppDashboard() {
                                 to='/members'
                                 inverted
                                 style={{ fontSize: '20px', backgroundColor: '#dc3030' }}>
-                                MEMBERS
+                                
                             </Segment>
                         </Grid.Column>
                     </Grid.Row>
@@ -66,7 +66,7 @@ export default function AppDashboard() {
                                 to='/members'
                                 inverted
                                 style={{ fontSize: '20px', backgroundColor: '#dc3030' }}>
-                                MEMBERS
+                                
                             </Segment>
                         </Grid.Column>
                     </Grid.Row>

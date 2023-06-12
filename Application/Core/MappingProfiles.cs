@@ -24,7 +24,9 @@ namespace Application.Core
             CreateMap<TransactionUser, Profiles.Profile>()
                 .ForMember(d => d.Id, o => o.MapFrom(s => s.AppUser.Id))
                 .ForMember(d => d.DisplayName, o => o.MapFrom(s => s.AppUser.DisplayName))
-                .ForMember(d => d.Username, o => o.MapFrom(s => s.AppUser.UserName));
+                .ForMember(d => d.Username, o => o.MapFrom(s => s.AppUser.UserName))
+                .ForMember(d => d.ExpenseTotal, o => o.MapFrom(s => s.AppUser.ExpenseTotal))
+                .ForMember(d => d.IncomeTotal, o => o.MapFrom(s => s.AppUser.IncomeTotal));
 
             CreateMap<Member, MemberDto>();
 

@@ -5,6 +5,7 @@ import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
 import { NavLink } from "react-router-dom";
+import UserBalance from "../../users/UserBalance";
 
 export default observer(function TransactionDashboard() {
 
@@ -20,10 +21,11 @@ export default observer(function TransactionDashboard() {
     return (
         <Grid>
             <Grid.Column width='10'>
+                <UserBalance />
                 <TransactionList />
             </Grid.Column>
             <Grid.Column width='6'>
-                <h3>Details</h3>
+                {/* <h3>Details</h3> */}
                 {/* {selectedTransaction &&
                     <TransactionDetails />} */}
             </Grid.Column>

@@ -44,6 +44,15 @@ namespace Application.Transactions
                     return Result<Unit>.Failure("You should be logged in to add a transaction");
                 }
 
+                if (request.Transaction.TransactionType == TransactionType.Expense)
+                {
+                    user.ExpenseTotal += request.Transaction.Amount;
+                }
+                else
+                {
+                    user.IncomeTotal += request.Transaction.Amount;
+                }
+
                 request.Transaction.Creator = user.DisplayName;
 
                 var transactionUser = new TransactionUser

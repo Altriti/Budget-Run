@@ -11,8 +11,8 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230529162115_TransactionCreator")]
-    partial class TransactionCreator
+    [Migration("20230607131222_AppUserBalance")]
+    partial class AppUserBalance
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -47,6 +47,12 @@ namespace Persistence.Migrations
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("INTEGER");
+
+                    b.Property<double>("ExpenseTotal")
+                        .HasColumnType("REAL");
+
+                    b.Property<double>("IncomeTotal")
+                        .HasColumnType("REAL");
 
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("INTEGER");

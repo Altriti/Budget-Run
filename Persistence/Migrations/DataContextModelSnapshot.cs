@@ -46,6 +46,12 @@ namespace Persistence.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("INTEGER");
 
+                    b.Property<double>("ExpenseTotal")
+                        .HasColumnType("REAL");
+
+                    b.Property<double>("IncomeTotal")
+                        .HasColumnType("REAL");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("INTEGER");
 
