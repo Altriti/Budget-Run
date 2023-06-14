@@ -98,7 +98,8 @@ namespace API.Controllers
                 Token = _tokenService.CreateToken(user),
                 UserName = user.UserName,
                 ExpenseTotal = user.ExpenseTotal,
-                IncomeTotal = user.IncomeTotal
+                IncomeTotal = user.IncomeTotal,
+                Email = user.Email
             };
         }
     }

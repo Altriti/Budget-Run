@@ -11,6 +11,7 @@ import LoginForm from "../../features/users/LoginForm";
 import MemberDashboard from "../../features/members/dashboard/MemberDashboard";
 import MemberDetails from "../../features/members/details/MemberDetails";
 import MemberForm from "../../features/members/form/MemberForm";
+import ProfilePage from "../../features/profile/ProfilePage";
 
 export const routes: RouteObject[] = [
     {
@@ -30,6 +31,7 @@ export const routes: RouteObject[] = [
             { path: 'members/:id', element: <MemberDetails /> },
             { path: 'createMember', element: <MemberForm key={'create'} /> },
             { path: 'members/manage/:id', element: <MemberForm key={'create'} /> },
+            { path: 'profile/:username', element: <ProfilePage /> },
             { path: '*', element: <Navigate replace to='/not-found' /> },
         ]
     }
