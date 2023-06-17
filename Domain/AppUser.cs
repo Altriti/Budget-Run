@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 
 namespace Domain
@@ -10,5 +11,10 @@ namespace Domain
         public ICollection<TransactionUser> Transactions { get; set; }
         public double IncomeTotal { get; set; }
         public double ExpenseTotal { get; set; }
+        [NotMapped]
+        public ICollection<Message> SentMessages { get; set; }
+
+        [NotMapped]
+        public ICollection<Message> ReceivedMessages { get; set; }
     }
 }

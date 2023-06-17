@@ -5,6 +5,7 @@ export default function AppDashboard() {
     const location = useLocation();
     const isTransactionsActive = location.pathname === '/transactions';
     const isMembersActive = location.pathname === '/members';
+    const isNotesActive = location.pathname === '/messages';
     return (
         <>
             <Segment inverted style={{ backgroundColor: '#dc3030' }}>
@@ -35,38 +36,14 @@ export default function AppDashboard() {
                         </Grid.Column>
                     </Grid.Row>
                     <Grid.Row style={{ padding: '2em' }} textAlign="center">
-                        <Grid.Column style={{ textDecoration: isMembersActive ? 'underline' : 'none' }}>
+                        <Grid.Column style={{ textDecoration: isNotesActive ? 'underline' : 'none' }}>
                             <Segment
                                 className="dashboard-segment-hover"
                                 as={NavLink}
-                                to='/members'
+                                to='/messages'
                                 inverted
                                 style={{ fontSize: '20px', backgroundColor: '#dc3030' }}>
-                                
-                            </Segment>
-                        </Grid.Column>
-                    </Grid.Row>
-                    <Grid.Row style={{ padding: '2em' }} textAlign="center">
-                        <Grid.Column style={{ textDecoration: isMembersActive ? 'underline' : 'none' }}>
-                            <Segment
-                                className="dashboard-segment-hover"
-                                as={NavLink}
-                                to='/members'
-                                inverted
-                                style={{ fontSize: '20px', backgroundColor: '#dc3030' }}>
-                                
-                            </Segment>
-                        </Grid.Column>
-                    </Grid.Row>
-                    <Grid.Row style={{ padding: '2em' }} textAlign="center">
-                        <Grid.Column style={{ textDecoration: isMembersActive ? 'underline' : 'none' }}>
-                            <Segment
-                                className="dashboard-segment-hover"
-                                as={NavLink}
-                                to='/members'
-                                inverted
-                                style={{ fontSize: '20px', backgroundColor: '#dc3030' }}>
-                                
+                                NOTES
                             </Segment>
                         </Grid.Column>
                     </Grid.Row>

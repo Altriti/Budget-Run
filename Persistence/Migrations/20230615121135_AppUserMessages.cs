@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Persistence.Migrations
 {
-    public partial class AppUserBalance : Migration
+    public partial class AppUserMessages : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

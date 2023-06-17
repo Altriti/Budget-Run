@@ -11,8 +11,8 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230607131222_AppUserBalance")]
-    partial class AppUserBalance
+    [Migration("20230615121135_AppUserMessages")]
+    partial class AppUserMessages
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

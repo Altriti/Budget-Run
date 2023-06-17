@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import LoadingComponent from "../../../app/layout/LoadingComponent";
 import { NavLink } from "react-router-dom";
 import UserBalance from "../../users/UserBalance";
+import Messages from "../../usersMessages/Messages";
 
 export default observer(function TransactionDashboard() {
 
@@ -20,11 +21,12 @@ export default observer(function TransactionDashboard() {
 
     return (
         <Grid>
-            <Grid.Column width='10'>
+            <Grid.Column width='11'>
                 <UserBalance />
                 <TransactionList />
             </Grid.Column>
-            <Grid.Column width='6'>
+            <Grid.Column width='5'>
+                <Messages />
                 {/* <h3>Details</h3> */}
                 {/* {selectedTransaction &&
                     <TransactionDetails />} */}

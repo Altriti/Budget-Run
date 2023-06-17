@@ -5,6 +5,7 @@ import { router } from "../router/Routes";
 import { store } from "../stores/store";
 import { User, UserFormValues } from "../models/user";
 import { Member } from "../models/member";
+import { Message, MessageForm } from "../models/message";
 
 const sleep = (delay: number) => {
     return new Promise((resolve) => {
@@ -89,12 +90,19 @@ const Members = {
     update: (member: Member) => requests.put<void>(`/members/${member.id}`, member),
     delete: (id: string) => requests.del<void>(`/members/${id}`),
     access: (id: string) => axios.post<void>(`/members/access/${id}`)
+};
+
+const Messages = {
+    list: () => requests.get<Message>('/messages'),
+    approve: (id: string) => axios.put<void>(`/messages/approve/${id}`),
+    create: (message: MessageForm) => requests.post<void>('/messages', message)
 }
 
 const agent = {
     Transactions,
     Account,
-    Members
+    Members,
+    Messages
 };
 
 export default agent;

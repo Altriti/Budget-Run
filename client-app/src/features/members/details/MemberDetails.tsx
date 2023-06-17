@@ -40,7 +40,7 @@ export default observer(function MemberDetails() {
         <Card fluid>
             <Card.Content>
                 <Card.Header width='8'>{member.name} {member.surname}
-                    {member.transactions?.[0].users?.map(user => (
+                    {member.transactions?.[0]?.users?.map(user => (
                         user.displayName !== loggedUser?.displayName && (
                             <span key={user.id} style={{ marginLeft: '5em' }}>
                                 <span style={{ color: 'blue', marginRight: '3em' }}>

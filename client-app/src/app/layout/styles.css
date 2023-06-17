@@ -53,5 +53,6 @@ body {
 .slick-next {
   right: 1em;
 }
-
-
+.notesButton:hover {
+  color: blue !important;
+}

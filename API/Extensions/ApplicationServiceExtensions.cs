@@ -27,6 +27,11 @@ namespace API.Extensions
             {
                 opt.UseSqlite(config.GetConnectionString("DefaultConnection"));
             });
+
+            string mongoConnectionString = config.GetConnectionString("MongoDBConnection");
+            string databaseName = "BudgetRunDB";
+            services.AddSingleton(new MongoDbContext(mongoConnectionString, databaseName));
+
             services.AddCors(opt =>
             {
                 opt.AddPolicy("CorsPolicy", policy =>

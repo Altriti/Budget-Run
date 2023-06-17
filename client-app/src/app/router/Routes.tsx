@@ -12,6 +12,8 @@ import MemberDashboard from "../../features/members/dashboard/MemberDashboard";
 import MemberDetails from "../../features/members/details/MemberDetails";
 import MemberForm from "../../features/members/form/MemberForm";
 import ProfilePage from "../../features/profile/ProfilePage";
+import AllMessagesList from "../../features/usersMessages/AllMessagesList";
+import SendMessageForm from "../../features/usersMessages/MessageForm";
 
 export const routes: RouteObject[] = [
     {
@@ -32,6 +34,8 @@ export const routes: RouteObject[] = [
             { path: 'createMember', element: <MemberForm key={'create'} /> },
             { path: 'members/manage/:id', element: <MemberForm key={'create'} /> },
             { path: 'profile/:username', element: <ProfilePage /> },
+            { path: 'messages', element: <AllMessagesList /> },
+            { path: 'messages/send', element: <SendMessageForm /> },
             { path: '*', element: <Navigate replace to='/not-found' /> },
         ]
     }
